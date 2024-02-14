@@ -28,12 +28,10 @@ export default defineEventHandler(async (event) => {
       <textarea v-model="code" />
     </div>
     <div class="highlighted-code">
-      <code>
-        <Shiki
-          :code="code"
-          lang="ts"
-        />
-      </code>
+      <Shiki
+        :code="code"
+        lang="ts"
+      />
     </div>
   </main>
 </template>

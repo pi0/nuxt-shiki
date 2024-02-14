@@ -12,7 +12,7 @@ const props = defineProps({
   },
   as: {
     type: String,
-    default: 'pre'
+    default: 'div'
   },
 });
 const code = computed(() => props.code)

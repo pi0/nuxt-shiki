@@ -59,13 +59,13 @@ You can use `<Shiki>` component to highlight code in your Vue app:
 </template>
 ```
 
-The component will render a `pre` tag with highlighted code inside.
+The component will render a `div` tag with highlighted code inside.
 
 You can use the `as` prop to render a different tag:
 
 ```vue
 <template>
-  <Shiki code="console.log('hello');" lang="js" as="div" />
+  <Shiki code="console.log('hello');" lang="js" as="span" />
 </template>
 ```
 
