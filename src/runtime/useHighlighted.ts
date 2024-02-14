@@ -1,5 +1,5 @@
 import { ref, effect, watch, type Ref } from "vue";
-
+import type { CodeToHastOptions } from "shiki/core";
 import { loadShiki } from "./loadShiki";
 
 /**
@@ -9,12 +9,15 @@ import { loadShiki } from "./loadShiki";
  *
  * ```vue
  * <script setup>
- * const code = ref('const foo = "bar";');
+ * const code = ref('const hello = "shiki";');
  * const highlighted = useHighlighted(code);
  * </script>
  * ```
  */
-export function useHighlighted(code: Ref<string>, options) {
+export function useHighlighted(
+  code: Ref<string>,
+  options: Partial<CodeToHastOptions>
+) {
   const highlighted = ref(code.value);
 
   const unwatch = watch(code, () => {

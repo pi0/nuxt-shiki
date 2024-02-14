@@ -10,7 +10,7 @@ const code = useState("code", () =>
 const code = ref('const foo = "bar";');
 const highlighted = useHighlighted(
   code,
-  { language: "javascript" }
+  { lang: "javascript" }
 );
 
 // Using in server routes
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
 `.trim()
 );
 
-const highlightedCode = useHighlighted(code, { language: "vue" });
+const highlightedCode = useHighlighted(code, { lang: "vue" });
 </script>
 
 <template>

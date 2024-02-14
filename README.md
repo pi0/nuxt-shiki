@@ -38,7 +38,7 @@ export default defineNuxtConfig({
   shiki: {
     theme: "github-light",
     themes: [],
-    language: "javascript",
+    lang: "javascript",
     languages: [],
   },
 });
@@ -64,7 +64,7 @@ You can use this utility both in `server/` and vue app code.
 ```vue
 <script setup>
   const shiki = await loadShiki();
-  const html = shiki.codeToHtml('const hello = "shiki";', { ...$shit.$defaults, lang: 'javascript' });
+  const html = shiki.codeToHtml('const hello = "shiki";', { ...$shiki.$defaults, lang: 'javascript' });
 </script>
 ```
 
@@ -72,12 +72,10 @@ You can use this utility both in `server/` and vue app code.
 
 ```ts
 // server/api/highlight.ts
-import { loadShiki, getQuery } from "#imports";
 
 export default defineEventHandler(async (event) => {
   const shiki = await loadShiki();
-  const { code } = getQuery(event);
-  return shiki.codeToHtml(code, { ...$shit.$defaults });
+  return shiki.codeToHtml('const hello = "shiki"', { ...$shiki.$defaults });
 });
 ```
 
@@ -89,7 +87,7 @@ Return a lazy highlighted code ref (only usable in Vue)
 
 ```vue
 <script setup>
-const code = ref('const foo = "bar";');
+const code = ref('const hello = "shiki";');
 const highlighted = useHighlighted(code);
 </script>
 ```
