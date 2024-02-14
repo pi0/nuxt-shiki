@@ -37,15 +37,15 @@ export default defineNuxtConfig({
   modules: ["nuxt-shiki"],
   shiki: {
     theme: "github-light",
-    themes: [],
     lang: "javascript",
-    languages: [],
+    themes: [],
+    langs: [],
   },
 });
 ```
 
-- `themes` and `languages` can be configured to set bundled themes and languages.
-- `theme` and `language` can be configured to set default theme and language.
+- `themes` and `langs` can be configured to set bundled themes and languages.
+- `theme` and `lang` can be configured to set default theme and language.
 
 **Tip:** You can access configurations and defaults in runtime using `shiki.$config` and `shiki.$defaults`.
 
@@ -63,8 +63,11 @@ You can use this utility both in `server/` and vue app code.
 
 ```vue
 <script setup>
-  const shiki = await loadShiki();
-  const html = shiki.codeToHtml('const hello = "shiki";', { ...$shiki.$defaults, lang: 'javascript' });
+const shiki = await loadShiki();
+const html = shiki.codeToHtml('const hello = "shiki";', {
+  ...$shiki.$defaults,
+  lang: "javascript",
+});
 </script>
 ```
 
@@ -91,7 +94,6 @@ const code = ref('const hello = "shiki";');
 const highlighted = useHighlighted(code);
 </script>
 ```
-
 
 <!-- /automd -->
 
