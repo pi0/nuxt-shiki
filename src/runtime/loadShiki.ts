@@ -18,7 +18,7 @@ let highlighter: HighlighterCore & {
  * ```vue
  * <script setup>
  *   const shiki = await loadShiki();
- *   const html = shiki.codeToHtml('const a = 1;', { lang: 'javascript' });
+ *   const html = shiki.codeToHtml('const hello = "shiki";', { ...$shit.$defaults, lang: 'javascript' });
  * </script>
  * ```
  *
@@ -30,8 +30,8 @@ let highlighter: HighlighterCore & {
  *
  * export default defineEventHandler(async (event) => {
  *   const shiki = await loadShiki();
- *   const { code = "// code", lang, theme } = getQuery(event);
- *   return shiki.codeToHtml(code, { lang, theme });
+ *   const { code } = getQuery(event);
+ *   return shiki.codeToHtml(code, { ...$shit.$defaults });
  * });
  * ```
  */

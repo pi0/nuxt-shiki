@@ -28,6 +28,27 @@ npx nuxi module add nuxt-shiki
 
 That's it! You can now use nuxt-shiki in your Nuxt app ✨
 
+## Options
+
+Options can be configured using `shiki` key in `nuxt.config`:
+
+```js
+export default defineNuxtConfig({
+  modules: ["nuxt-shiki"],
+  shiki: {
+    theme: "github-light",
+    themes: [],
+    language: "javascript",
+    languages: [],
+  },
+});
+```
+
+- `themes` and `languages` can be configured to set bundled themes and languages.
+- `theme` and `language` can be configured to set default theme and language.
+
+**Tip:** You can access configurations and defaults in runtime using `shiki.$config` and `shiki.$defaults`.
+
 ## Utils
 
 <!-- automd:jsdocs src=./src/runtime/index -->
@@ -42,8 +63,8 @@ You can use this utility both in `server/` and vue app code.
 
 ```vue
 <script setup>
-const shiki = await loadShiki();
-const html = shiki.codeToHtml("const a = 1;", { lang: "javascript" });
+  const shiki = await loadShiki();
+  const html = shiki.codeToHtml('const hello = "shiki";', { ...$shit.$defaults, lang: 'javascript' });
 </script>
 ```
 
@@ -55,8 +76,8 @@ import { loadShiki, getQuery } from "#imports";
 
 export default defineEventHandler(async (event) => {
   const shiki = await loadShiki();
-  const { code = "// code", lang, theme } = getQuery(event);
-  return shiki.codeToHtml(code, { lang, theme });
+  const { code } = getQuery(event);
+  return shiki.codeToHtml(code, { ...$shit.$defaults });
 });
 ```
 
@@ -72,6 +93,7 @@ const code = ref('const foo = "bar";');
 const highlighted = useHighlighted(code);
 </script>
 ```
+
 
 <!-- /automd -->
 
