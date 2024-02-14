@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { useHighlighted, useState } from "#imports";
+import { useState } from "#imports";
 
 const code = useState("code", () =>
   /*js*/ `
 // This is a demo! Try editing in left panel
 
 // Using with Vue composables
-
 const code = ref('const foo = "bar";');
 const highlighted = useHighlighted(
   code,
@@ -14,7 +13,6 @@ const highlighted = useHighlighted(
 );
 
 // Using in server routes
-
 export default defineEventHandler(async (event) => {
   const shiki = await loadShiki();
   const { code, language } = getQuery(event);
@@ -22,8 +20,6 @@ export default defineEventHandler(async (event) => {
 });
 `.trim()
 );
-
-const highlightedCode = useHighlighted(code, { lang: "vue" });
 </script>
 
 <template>
@@ -33,7 +29,10 @@ const highlightedCode = useHighlighted(code, { lang: "vue" });
     </div>
     <div class="highlighted-code">
       <code>
-        <pre v-html="highlightedCode" />
+        <Shiki
+          :code="code"
+          lang="ts"
+        />
       </code>
     </div>
   </main>

@@ -49,6 +49,26 @@ export default defineNuxtConfig({
 
 **Tip:** You can access configurations and defaults in runtime using `shiki.$config` and `shiki.$defaults`.
 
+## Shiki Component
+
+You can use `<Shiki>` component to highlight code in your Vue app:
+
+```vue
+<template>
+  <Shiki code="console.log('hello');" lang="js" />
+</template>
+```
+
+The component will render a `pre` tag with highlighted code inside.
+
+You can use the `as` prop to render a different tag:
+
+```vue
+<template>
+  <Shiki code="console.log('hello');" lang="js" as="div" />
+</template>
+```
+
 ## Utils
 
 <!-- automd:jsdocs src=./src/runtime/index -->

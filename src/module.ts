@@ -5,6 +5,7 @@ import {
   addTemplate,
   useNitro,
   addServerImports,
+  addComponent
 } from "@nuxt/kit";
 import type { Nuxt } from "@nuxt/schema";
 import type { BundledLanguage, BundledTheme } from "shiki";
@@ -39,6 +40,12 @@ export default defineNuxtModule<ModuleOptions>({
 
     // (not needed after Nitro 2.9)
     addUnwasmSupport(nuxt);
+
+    // Add component
+    addComponent({
+      filePath: resolver.resolve("./runtime/Shiki.vue"),
+      name: "Shiki"
+    })
 
     // Add imports
     addImports([

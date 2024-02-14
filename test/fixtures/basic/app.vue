@@ -1,6 +1,6 @@
 <template>
-  <div>basic</div>
+  <Shiki
+    code="console.log('hello');"
+    lang="js"
+  />
 </template>
-
-<script setup>
-</script>
