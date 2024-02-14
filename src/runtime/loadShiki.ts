@@ -16,21 +16,24 @@ let highlighter: HighlighterCore & {
  * @example
  *
  * ```vue
- * <script setup>
- *   const shiki = await loadShiki();
- *   const html = shiki.codeToHtml('const hello = "shiki";', { ...$shiki.$defaults, lang: 'javascript' });
- * </script>
+<script setup>
+const shiki = await loadShiki();
+const html = shiki.codeToHtml('const hello = "shiki";', {
+  ...$shiki.$defaults,
+  lang: "javascript",
+});
+</script>
  * ```
  *
  * @example
  *
  * ```ts
- * // server/api/highlight.ts
- *
- * export default defineEventHandler(async (event) => {
- *   const shiki = await loadShiki();
- *   return shiki.codeToHtml('const hello = "shiki"', { ...$shiki.$defaults });
- * });
+// server/api/highlight.ts
+
+export default defineEventHandler(async (event) => {
+  const shiki = await loadShiki();
+  return shiki.codeToHtml('const hello = "shiki"', { ...$shiki.$defaults });
+});
  * ```
  */
 export async function loadShiki() {

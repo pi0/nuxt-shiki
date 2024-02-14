@@ -8,10 +8,10 @@ import { loadShiki } from "./loadShiki";
  * @example
  *
  * ```vue
- * <script setup>
- * const code = ref('const hello = "shiki";');
- * const highlighted = useHighlighted(code);
- * </script>
+<script setup>
+const code = ref('const hello = "shiki";');
+const highlighted = useHighlighted(code);
+</script>
  * ```
  */
 export function useHighlighted(
