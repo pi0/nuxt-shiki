@@ -15,30 +15,32 @@ const highlighted = await useHighlighted(code);
  * ```
  */
 export async function useHighlighted(
-  code: Ref<string>,
+  code: string | Ref<string>,
   options: Partial<CodeToHastOptions>
 ) {
+  const _code = ref(code);
+
   if (import.meta.server) {
     const shiki = await loadShiki();
     return ref(
-      shiki.codeToHtml(code.value, {
+      shiki.codeToHtml(_code.value, {
         ...shiki.$defaults,
         ...options,
       })
     );
   }
 
-  const highlighted = ref(code.value);
+  const highlighted = ref(_code.value);
 
-  const unwatch = watch(code, () => {
-    highlighted.value = code.value;
+  const unwatch = watch(_code, () => {
+    highlighted.value = _code.value;
   });
 
   const init = () => {
     loadShiki().then((shiki) => {
       unwatch();
       effect(() => {
-        highlighted.value = shiki.codeToHtml(code.value, {
+        highlighted.value = shiki.codeToHtml(_code.value, {
           ...shiki.$defaults,
           ...options,
         });

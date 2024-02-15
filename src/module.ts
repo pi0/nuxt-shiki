@@ -43,7 +43,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add component
     addComponent({
-      filePath: resolver.resolve("./runtime/Shiki.vue"),
+      filePath: resolver.resolve("./runtime/Shiki"),
       name: "Shiki",
     });
 
