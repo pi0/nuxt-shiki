@@ -20,5 +20,6 @@ const highlighted = useHighlighted(code, { lang: props.lang });
 </script>
 
 <template>
+  <!-- eslint-disable-next-line -->
   <component :is="as" v-html="highlighted" />
 </template>
