@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
   modules: ['../src/module'],
   shiki: {
-    theme: 'github-dark',
+    themes: ['github-light', 'github-dark'],
     langs: ['typescript'],
   },
 })

@@ -20,6 +20,10 @@ export async function useHighlighted(
 ) {
   const _code = isRef(code) ? code : ref(code)
 
+  if ('themes' in options && !options.themes) {
+    delete options.themes // shiki bug?
+  }
+
   if (import.meta.server) {
     const shiki = await loadShiki()
     return ref(

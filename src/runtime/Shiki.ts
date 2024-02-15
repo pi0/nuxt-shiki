@@ -16,6 +16,15 @@ export default defineComponent({
       type: String,
       default: 'div',
     },
+    theme: {
+      type: String,
+    },
+    themes: {
+      type: Object,
+    },
+    options: {
+      type: Object,
+    },
   },
   async setup(props) {
     const el = ref() as Ref<HTMLElement>
@@ -27,6 +36,9 @@ export default defineComponent({
     const highlighted = await useHighlighted(toRef(props, 'code'), {
       lang: props.lang,
       highlighted: hydratedCode,
+      theme: props.theme,
+      themes: props.themes || undefined,
+      ...props.options,
     })
 
     return { el, highlighted }

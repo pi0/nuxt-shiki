@@ -3,5 +3,6 @@
   "extends": ["@nuxt/eslint-config"],
   "rules": {
     "vue/max-attributes-per-line": 0,
+    "vue/require-default-prop": 0,
   },
 }

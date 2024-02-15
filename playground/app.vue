@@ -14,12 +14,18 @@ onMounted(() => {
 </script>
 
 <template>
-  <main>
+  <main class="dark">
     <div class="editor">
       <textarea v-model="code" />
     </div>
     <div class="highlighted-code">
-      <Shiki id="editor" contenteditable :code="code" lang="ts" />
+      <Shiki
+        id="editor"
+        contenteditable
+        :code="code"
+        :themes="{ light: 'github-light', dark: 'github-dark' }"
+        lang="ts"
+      />
     </div>
   </main>
 </template>
@@ -30,7 +36,18 @@ body {
 }
 </style>
 
-<style scoped>
+<style>
+/* https://shiki.style/guide/dual-themes#class-based-dark-mode */
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  /* Optional, if you also want font styles */
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
 main {
   display: flex;
   height: 100vh;
@@ -58,12 +75,6 @@ textarea {
   font-family: 'Courier New', Courier, monospace; /* Monospace font */
   font-size: 16px;
   resize: none; /* Prevent textarea from being resized */
-}
-
-.highlighted-code {
-  overflow: auto;
-  background-color:; /* Darker background for highlighted code */
-  border-left: 1px solid #555; /* Border between code editor and highlighted code */
 }
 
 code {
