@@ -1,6 +1,6 @@
 {
   "name": "nuxt-shiki",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Nuxt + Shiki syntax highlighting",
   "repository": "pi0/nuxt-shiki",
   "license": "MIT",

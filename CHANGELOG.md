@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.1.1
+
+[compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.0.2...v0.1.1)
+
+### 🚀 Enhancements
+
+- **component:** Allow passing `theme`, `themes` and `options ([95f2027](https://github.com/pi0/nuxt-shiki/commit/95f2027))
+
+### 🏡 Chore
+
+- Update test script ([e7a6df8](https://github.com/pi0/nuxt-shiki/commit/e7a6df8))
+- Bump to 0.1.0 ([4e819f1](https://github.com/pi0/nuxt-shiki/commit/4e819f1))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v0.0.2
 
 
