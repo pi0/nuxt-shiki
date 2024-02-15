@@ -72,7 +72,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add config template
     const template = addTemplate({
-      filename: "shiki.config.mjs",
+      filename: "shiki-config.mjs",
       getContents: () => {
         return `
 export async function loadShikiConfig() {
@@ -94,8 +94,8 @@ export async function loadShikiConfig() {
       },
     });
     nuxt.options.nitro.virtual = nuxt.options.nitro.virtual || {};
-    nuxt.options.nitro.virtual[template.filename] = template.getContents;
-    nuxt.options.alias["shiki.config.mjs"] = "#build/shiki.config.mjs";
+    nuxt.options.nitro.virtual["shiki-config.mjs"] = template.getContents;
+    nuxt.options.alias["shiki-config.mjs"] = "#build/shiki-config.mjs";
   },
 });
 

@@ -1,6 +1,3 @@
 <template>
-  <Shiki
-    code="console.log('hello');"
-    lang="js"
-  />
+  <Shiki code="console.log('hello');" lang="js" />
 </template>
