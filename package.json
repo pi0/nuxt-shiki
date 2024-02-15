@@ -1,6 +1,6 @@
 {
   "name": "nuxt-shiki",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Nuxt + Shiki syntax highlighting",
   "repository": "pi0/nuxt-shiki",
   "license": "MIT",
@@ -39,7 +39,7 @@
     "@nuxt/schema": "^3.10.2",
     "@nuxt/test-utils": "^3.11.0",
     "@types/node": "^20.11.19",
-    "automd": "^0.2.0",
+    "automd": "^0.3.0",
     "changelogen": "^0.5.5",
     "eslint": "^8.56.0",
     "nuxt": "^3.10.2",
