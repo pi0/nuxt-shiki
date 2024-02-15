@@ -10,14 +10,24 @@ import { loadShiki } from "./loadShiki";
  * ```vue
 <script setup>
 const code = ref('const hello = "shiki";');
-const highlighted = useHighlighted(code);
+const highlighted = await useHighlighted(code);
 </script>
  * ```
  */
-export function useHighlighted(
+export async function useHighlighted(
   code: Ref<string>,
   options: Partial<CodeToHastOptions>
 ) {
+  if (import.meta.server) {
+    const shiki = await loadShiki();
+    return ref(
+      shiki.codeToHtml(code.value, {
+        ...shiki.$defaults,
+        ...options,
+      })
+    );
+  }
+
   const highlighted = ref(code.value);
 
   const unwatch = watch(code, () => {

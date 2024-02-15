@@ -7,7 +7,7 @@ const code = useState("code", () =>
 
 // Using with Vue composables
 const code = ref('const foo = "bar";');
-const highlighted = useHighlighted(
+const highlighted = await useHighlighted(
   code,
   { lang: "javascript" }
 );
@@ -28,10 +28,7 @@ export default defineEventHandler(async (event) => {
       <textarea v-model="code" />
     </div>
     <div class="highlighted-code">
-      <Shiki
-        :code="code"
-        lang="ts"
-      />
+      <Shiki :code="code" lang="ts" />
     </div>
   </main>
 </template>

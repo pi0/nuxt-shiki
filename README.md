@@ -111,10 +111,9 @@ Return a lazy highlighted code ref (only usable in Vue)
 ```vue
 <script setup>
 const code = ref('const hello = "shiki";');
-const highlighted = useHighlighted(code);
+const highlighted = await useHighlighted(code);
 </script>
 ```
-
 
 <!-- /automd -->
 

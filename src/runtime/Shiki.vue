@@ -16,10 +16,10 @@ const props = defineProps({
   },
 });
 const code = toRef(props, "code");
-const highlighted = useHighlighted(code, { lang: props.lang });
+const highlighted = await useHighlighted(code, { lang: props.lang });
 </script>
 
 <template>
-  <!-- eslint-disable-next-line -->
-  <component :is="as" v-html="highlighted" />
+  <!-- TODO: componet :is seems not working in SSR! -->
+  <div v-html="highlighted" />
 </template>
