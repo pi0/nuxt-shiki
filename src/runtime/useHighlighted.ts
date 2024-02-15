@@ -1,6 +1,6 @@
-import { ref, effect, watch, type Ref } from "vue";
-import type { CodeToHastOptions } from "shiki/core";
-import { loadShiki } from "./loadShiki";
+import { ref, effect, watch, type Ref } from 'vue'
+import type { CodeToHastOptions } from 'shiki/core'
+import { loadShiki } from './loadShiki'
 
 /**
  * Return a lazy highlighted code ref (only usable in Vue)
@@ -16,39 +16,39 @@ const highlighted = await useHighlighted(code);
  */
 export async function useHighlighted(
   code: string | Ref<string>,
-  options: Partial<CodeToHastOptions>
+  options: Partial<CodeToHastOptions>,
 ) {
-  const _code = ref(code);
+  const _code = ref(code)
 
   if (import.meta.server) {
-    const shiki = await loadShiki();
+    const shiki = await loadShiki()
     return ref(
       shiki.codeToHtml(_code.value, {
         ...shiki.$defaults,
         ...options,
-      })
-    );
+      }),
+    )
   }
 
-  const highlighted = ref(_code.value);
+  const highlighted = ref(_code.value)
 
   const unwatch = watch(_code, () => {
-    highlighted.value = _code.value;
-  });
+    highlighted.value = _code.value
+  })
 
   const init = () => {
     loadShiki().then((shiki) => {
-      unwatch();
+      unwatch()
       effect(() => {
         highlighted.value = shiki.codeToHtml(_code.value, {
           ...shiki.$defaults,
           ...options,
-        });
-      });
-    });
-  };
+        })
+      })
+    })
+  }
 
-  init();
+  init()
 
-  return highlighted;
+  return highlighted
 }

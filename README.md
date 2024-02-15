@@ -2,8 +2,8 @@
 
 <!-- automd:badges -->
 
-[![npm version](https://flat.badgen.net/npm/v/nuxt-shiki)](https://npmjs.com/package/nuxt-shiki)
-[![npm downloads](https://flat.badgen.net/npm/dm/nuxt-shiki)](https://npmjs.com/package/nuxt-shiki)
+[![npm version](https://img.shields.io/npm/v/nuxt-shiki)](https://npmjs.com/package/nuxt-shiki)
+[![npm downloads](https://img.shields.io/npm/dm/nuxt-shiki)](https://npmjs.com/package/nuxt-shiki)
 
 <!-- /automd -->
 
@@ -34,14 +34,14 @@ Options can be configured using `shiki` key in `nuxt.config`:
 
 ```js
 export default defineNuxtConfig({
-  modules: ["nuxt-shiki"],
+  modules: ['nuxt-shiki'],
   shiki: {
-    theme: "github-light",
-    lang: "javascript",
+    theme: 'github-light',
+    lang: 'javascript',
     themes: [],
     langs: [],
   },
-});
+})
 ```
 
 - `themes` and `langs` can be configured to set bundled themes and languages.
@@ -114,6 +114,7 @@ const code = ref('const hello = "shiki";');
 const highlighted = await useHighlighted(code);
 </script>
 ```
+
 
 <!-- /automd -->
 

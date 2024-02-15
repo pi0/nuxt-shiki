@@ -1,12 +1,12 @@
-import type { HighlighterCore, HighlighterCoreOptions } from "shiki/core";
+import type { HighlighterCore, HighlighterCoreOptions } from 'shiki/core'
 
 let highlighter: HighlighterCore & {
   $config: HighlighterCoreOptions & {
-    defaultTheme: string;
-    defaultLang: string;
-  };
-  $defaults: { lang: string; theme: string };
-};
+    defaultTheme: string
+    defaultLang: string
+  }
+  $defaults: { lang: string; theme: string }
+}
 
 /**
  * Lazy-load shiki instance.
@@ -38,27 +38,27 @@ export default defineEventHandler(async (event) => {
  */
 export async function loadShiki() {
   if (highlighter) {
-    highlighter;
+    highlighter
   }
 
   const [{ loadWasm, getHighlighterCore }, { loadShikiConfig }] =
     await Promise.all([
-      import("shiki/core"),
-      import("shiki-config.mjs" as string),
-    ]);
+      import('shiki/core'),
+      import('shiki-config.mjs' as string),
+    ])
 
   const [$config] = await Promise.all([
     loadShikiConfig(),
-    loadWasm(import("shiki/wasm" as string)),
-  ]);
+    loadWasm(import('shiki/wasm' as string)),
+  ])
 
   highlighter = await getHighlighterCore($config).then((h) => ({
     $config,
     $defaults: $config.defaults,
     ...h,
-  }));
+  }))
 
-  highlighter.setTheme($config.defaultTheme);
+  highlighter.setTheme($config.defaultTheme)
 
-  return highlighter;
+  return highlighter
 }

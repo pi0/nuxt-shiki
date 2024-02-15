@@ -1,5 +1,5 @@
-import { defineComponent, h } from "vue";
-import { useHighlighted } from "#imports";
+import { defineComponent, h } from 'vue'
+import { useHighlighted } from '#imports'
 
 export default defineComponent({
   props: {
@@ -13,16 +13,16 @@ export default defineComponent({
     },
     as: {
       type: String,
-      default: "div",
+      default: 'div',
     },
   },
   async setup(props) {
-    const highlighted = await useHighlighted(props.code, { lang: props.lang });
-    return { highlighted };
+    const highlighted = await useHighlighted(props.code, { lang: props.lang })
+    return { highlighted }
   },
   render() {
     return h(this.as, {
       innerHTML: this.highlighted,
-    });
+    })
   },
-});
+})

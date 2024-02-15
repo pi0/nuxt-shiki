@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useState } from "#imports";
+import { useState } from '#imports'
 
-const code = useState("code", () =>
+const code = useState('code', () =>
   /*js*/ `
 // This is a demo! Try editing in left panel
 
@@ -18,8 +18,8 @@ export default defineEventHandler(async (event) => {
   const { code, language } = getQuery(event);
   return shiki.codeToHtml(code, { language });
 });
-`.trim()
-);
+`.trim(),
+)
 </script>
 
 <template>
@@ -64,21 +64,21 @@ textarea {
   border: none;
   background-color: transparent; /* Transparent background for code editor */
   color: inherit; /* Inherit text color */
-  font-family: "Courier New", Courier, monospace; /* Monospace font */
+  font-family: 'Courier New', Courier, monospace; /* Monospace font */
   font-size: 16px;
   resize: none; /* Prevent textarea from being resized */
 }
 
 .highlighted-code {
   overflow: auto;
-  background-color: ; /* Darker background for highlighted code */
+  background-color:; /* Darker background for highlighted code */
   border-left: 1px solid #555; /* Border between code editor and highlighted code */
 }
 
 code {
   display: block;
   white-space: pre-wrap;
-  font-family: "Courier New", Courier, monospace; /* Monospace font */
+  font-family: 'Courier New', Courier, monospace; /* Monospace font */
   font-size: 16px;
   padding: 10px;
 }
