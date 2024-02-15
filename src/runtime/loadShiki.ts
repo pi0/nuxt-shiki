@@ -1,11 +1,15 @@
 import type { HighlighterCore, HighlighterCoreOptions } from 'shiki/core'
 
-let highlighter: HighlighterCore & {
+type ShikiInstance = HighlighterCore & {
   $config: HighlighterCoreOptions & {
     defaultTheme: string
     defaultLang: string
   }
-  $defaults: { lang: string; theme: string }
+}
+
+declare global {
+  // eslint-disable-next-line no-var
+  var __nuxt_shiki__: ShikiInstance | Promise<ShikiInstance>
 }
 
 /**
@@ -36,11 +40,17 @@ export default defineEventHandler(async (event) => {
 });
  * ```
  */
-export async function loadShiki() {
-  if (highlighter) {
-    highlighter
+export async function loadShiki(): Promise<ShikiInstance> {
+  if (globalThis.__nuxt_shiki__) {
+    return globalThis.__nuxt_shiki__
   }
+  globalThis.__nuxt_shiki__ = _loadShiki()
+  globalThis.__nuxt_shiki__ = await globalThis.__nuxt_shiki__
+  return globalThis.__nuxt_shiki__
+}
 
+async function _loadShiki(): Promise<ShikiInstance> {
+  console.log('Initializing shiki...')
   const [{ loadWasm, getHighlighterCore }, { loadShikiConfig }] =
     await Promise.all([
       import('shiki/core'),
@@ -52,13 +62,11 @@ export async function loadShiki() {
     loadWasm(import('shiki/wasm' as string)),
   ])
 
-  highlighter = await getHighlighterCore($config).then((h) => ({
+  const highlighter = await getHighlighterCore($config).then((h) => ({
     $config,
     $defaults: $config.defaults,
     ...h,
   }))
-
-  highlighter.setTheme($config.defaultTheme)
 
   return highlighter
 }
