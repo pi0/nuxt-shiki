@@ -10,25 +10,37 @@ import { loadShiki } from "./loadShiki";
  * ```vue
 <script setup>
 const code = ref('const hello = "shiki";');
-const highlighted = useHighlighted(code);
+const highlighted = await useHighlighted(code);
 </script>
  * ```
  */
-export function useHighlighted(
-  code: Ref<string>,
+export async function useHighlighted(
+  code: string | Ref<string>,
   options: Partial<CodeToHastOptions>
 ) {
-  const highlighted = ref(code.value);
+  const _code = ref(code);
 
-  const unwatch = watch(code, () => {
-    highlighted.value = code.value;
+  if (import.meta.server) {
+    const shiki = await loadShiki();
+    return ref(
+      shiki.codeToHtml(_code.value, {
+        ...shiki.$defaults,
+        ...options,
+      })
+    );
+  }
+
+  const highlighted = ref(_code.value);
+
+  const unwatch = watch(_code, () => {
+    highlighted.value = _code.value;
   });
 
   const init = () => {
     loadShiki().then((shiki) => {
       unwatch();
       effect(() => {
-        highlighted.value = shiki.codeToHtml(code.value, {
+        highlighted.value = shiki.codeToHtml(_code.value, {
           ...shiki.$defaults,
           ...options,
         });

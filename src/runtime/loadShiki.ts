@@ -44,7 +44,7 @@ export async function loadShiki() {
   const [{ loadWasm, getHighlighterCore }, { loadShikiConfig }] =
     await Promise.all([
       import("shiki/core"),
-      import("shiki.config.mjs" as string),
+      import("shiki-config.mjs" as string),
     ]);
 
   const [$config] = await Promise.all([

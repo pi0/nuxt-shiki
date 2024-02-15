@@ -1,20 +1,18 @@
 <script setup lang="ts">
-import { useHighlighted, useState } from "#imports";
+import { useState } from "#imports";
 
 const code = useState("code", () =>
   /*js*/ `
 // This is a demo! Try editing in left panel
 
 // Using with Vue composables
-
 const code = ref('const foo = "bar";');
-const highlighted = useHighlighted(
+const highlighted = await useHighlighted(
   code,
   { lang: "javascript" }
 );
 
 // Using in server routes
-
 export default defineEventHandler(async (event) => {
   const shiki = await loadShiki();
   const { code, language } = getQuery(event);
@@ -22,8 +20,6 @@ export default defineEventHandler(async (event) => {
 });
 `.trim()
 );
-
-const highlightedCode = useHighlighted(code, { lang: "vue" });
 </script>
 
 <template>
@@ -32,9 +28,7 @@ const highlightedCode = useHighlighted(code, { lang: "vue" });
       <textarea v-model="code" />
     </div>
     <div class="highlighted-code">
-      <code>
-        <pre v-html="highlightedCode" />
-      </code>
+      <Shiki :code="code" lang="ts" />
     </div>
   </main>
 </template>
