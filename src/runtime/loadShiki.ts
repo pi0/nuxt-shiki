@@ -1,6 +1,7 @@
 import type { HighlighterCore, HighlighterCoreOptions } from 'shiki/core'
 
 type ShikiInstance = HighlighterCore & {
+  $defaults: { theme: string; lang: string }
   $config: HighlighterCoreOptions & {
     defaultTheme: string
     defaultLang: string
@@ -50,7 +51,6 @@ export async function loadShiki(): Promise<ShikiInstance> {
 }
 
 async function _loadShiki(): Promise<ShikiInstance> {
-  console.log('Initializing shiki...')
   const [{ loadWasm, getHighlighterCore }, { loadShikiConfig }] =
     await Promise.all([
       import('shiki/core'),

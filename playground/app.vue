@@ -1,25 +1,16 @@
 <script setup lang="ts">
-import { useState } from '#imports'
+const code = ref<string>(/*js*/ `
+// Try editing in the left panel!
+console.log('Hello, World!')
+`)
 
-const code = useState('code', () =>
-  /*js*/ `
-// This is a demo! Try editing in left panel
-
-// Using with Vue composables
-const code = ref('const foo = "bar";');
-const highlighted = await useHighlighted(
-  code,
-  { lang: "javascript" }
-);
-
-// Using in server routes
-export default defineEventHandler(async (event) => {
-  const shiki = await loadShiki();
-  const { code, language } = getQuery(event);
-  return shiki.codeToHtml(code, { language });
-});
-`.trim(),
-)
+onMounted(() => {
+  const editor = document.querySelector('#editor')!
+  // Challenge: Can we preserve the cursor position when the code changes? :D
+  editor?.addEventListener('input', () => {
+    code.value = editor.textContent || ''
+  })
+})
 </script>
 
 <template>
@@ -28,7 +19,7 @@ export default defineEventHandler(async (event) => {
       <textarea v-model="code" />
     </div>
     <div class="highlighted-code">
-      <Shiki :code="code" lang="ts" />
+      <Shiki id="editor" contenteditable :code="code" lang="ts" />
     </div>
   </main>
 </template>

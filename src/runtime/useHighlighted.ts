@@ -1,4 +1,4 @@
-import { ref, effect, watch, type Ref } from 'vue'
+import { ref, watchEffect, watch, isRef, type Ref } from 'vue'
 import type { CodeToHastOptions } from 'shiki/core'
 import { loadShiki } from './loadShiki'
 
@@ -16,9 +16,9 @@ const highlighted = await useHighlighted(code);
  */
 export async function useHighlighted(
   code: string | Ref<string>,
-  options: Partial<CodeToHastOptions>,
+  options: Partial<CodeToHastOptions> & { highlighted?: string } = {},
 ) {
-  const _code = ref(code)
+  const _code = isRef(code) ? code : ref(code)
 
   if (import.meta.server) {
     const shiki = await loadShiki()
@@ -30,16 +30,20 @@ export async function useHighlighted(
     )
   }
 
-  const highlighted = ref(_code.value)
+  const highlighted = ref(options.highlighted || '')
 
-  const unwatch = watch(_code, () => {
-    highlighted.value = _code.value
-  })
-
-  const init = () => {
-    loadShiki().then((shiki) => {
+  if (highlighted.value) {
+    const unwatch = watch(_code, () => {
       unwatch()
-      effect(() => {
+      init()
+    })
+  } else {
+    await init()
+  }
+
+  function init() {
+    loadShiki().then((shiki) => {
+      watchEffect(() => {
         highlighted.value = shiki.codeToHtml(_code.value, {
           ...shiki.$defaults,
           ...options,
@@ -47,8 +51,6 @@ export async function useHighlighted(
       })
     })
   }
-
-  init()
 
   return highlighted
 }

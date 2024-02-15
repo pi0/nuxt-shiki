@@ -12,8 +12,8 @@
 ## Features
 
 - Configurable themes and languages
-- Full lazy loading
-- Optimized integration with shiki/core
+- Full lazy loading with auto hydration of highlighted code
+- Treeshakable and optimized integration with shiki/core
 
 > [!IMPORTANT]
 > This module is under development!
@@ -83,11 +83,11 @@ You can use this utility both in `server/` and vue app code.
 
 ```vue
 <script setup>
-const shiki = await loadShiki();
+const shiki = await loadShiki()
 const html = shiki.codeToHtml('const hello = "shiki";', {
   ...$shiki.$defaults,
-  lang: "javascript",
-});
+  lang: 'javascript',
+})
 </script>
 ```
 
@@ -97,9 +97,9 @@ const html = shiki.codeToHtml('const hello = "shiki";', {
 // server/api/highlight.ts
 
 export default defineEventHandler(async (event) => {
-  const shiki = await loadShiki();
-  return shiki.codeToHtml('const hello = "shiki"', { ...$shiki.$defaults });
-});
+  const shiki = await loadShiki()
+  return shiki.codeToHtml('const hello = "shiki"', { ...$shiki.$defaults })
+})
 ```
 
 ### `useHighlighted(code, options)`
@@ -110,11 +110,10 @@ Return a lazy highlighted code ref (only usable in Vue)
 
 ```vue
 <script setup>
-const code = ref('const hello = "shiki";');
-const highlighted = await useHighlighted(code);
+const code = ref('const hello = "shiki";')
+const highlighted = await useHighlighted(code)
 </script>
 ```
-
 
 <!-- /automd -->
 

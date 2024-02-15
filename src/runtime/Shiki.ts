@@ -1,4 +1,5 @@
-import { defineComponent, h } from 'vue'
+import { defineComponent, h, ref, toRef, getCurrentInstance } from 'vue'
+import type { Ref } from 'vue'
 import { useHighlighted } from '#imports'
 
 export default defineComponent({
@@ -17,12 +18,23 @@ export default defineComponent({
     },
   },
   async setup(props) {
-    const highlighted = await useHighlighted(props.code, { lang: props.lang })
-    return { highlighted }
+    const el = ref() as Ref<HTMLElement>
+
+    const hydratedCode = process.client
+      ? getCurrentInstance()?.vnode?.el?.innerHTML
+      : undefined
+
+    const highlighted = await useHighlighted(toRef(props, 'code'), {
+      lang: props.lang,
+      highlighted: hydratedCode,
+    })
+
+    return { el, highlighted }
   },
   render() {
     return h(this.as, {
       innerHTML: this.highlighted,
+      ref: 'el',
     })
   },
 })
