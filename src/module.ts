@@ -5,7 +5,7 @@ import {
   addTemplate,
   useNitro,
   addServerImports,
-  addComponent
+  addComponent,
 } from "@nuxt/kit";
 import type { Nuxt } from "@nuxt/schema";
 import type { BundledLanguage, BundledTheme } from "shiki";
@@ -44,8 +44,8 @@ export default defineNuxtModule<ModuleOptions>({
     // Add component
     addComponent({
       filePath: resolver.resolve("./runtime/Shiki.vue"),
-      name: "Shiki"
-    })
+      name: "Shiki",
+    });
 
     // Add imports
     addImports([
@@ -95,6 +95,7 @@ export async function loadShikiConfig() {
     });
     nuxt.options.nitro.virtual = nuxt.options.nitro.virtual || {};
     nuxt.options.nitro.virtual[template.filename] = template.getContents;
+    nuxt.options.alias["shiki.config.mjs"] = "#build/shiki.config.mjs";
   },
 });
 
