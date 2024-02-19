@@ -96,9 +96,7 @@ export async function loadShikiConfig() {
     // TODO: It shouldn't be this hard to have a shared/working virtual module
     nuxt.options.nitro.virtual = nuxt.options.nitro.virtual || {}
     nuxt.options.nitro.virtual['shiki-config.mjs'] = template.getContents
-    if (!nuxt.options.dev) {
-      nuxt.options.alias['shiki-config.mjs'] = '#build/shiki-config.mjs'
-    }
+    nuxt.options.alias['shiki-config.mjs'] = template.dst
   },
 })
 
