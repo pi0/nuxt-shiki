@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.1.2
+
+[compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.1.1...v0.1.2)
+
+### 🩹 Fixes
+
+- Resolve `shiki-config.mjs` to full path ([#12](https://github.com/pi0/nuxt-shiki/pull/12))
+
+### 🏡 Chore
+
+- Update deps ([dcc0eea](https://github.com/pi0/nuxt-shiki/commit/dcc0eea))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v0.1.1
 
 [compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.0.2...v0.1.1)
