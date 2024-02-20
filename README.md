@@ -121,7 +121,6 @@ const highlighted = await useHighlighted(code);
 </script>
 ```
 
-
 <!-- /automd -->
 
 ## Development
