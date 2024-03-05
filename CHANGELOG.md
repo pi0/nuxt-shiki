@@ -1,5 +1,44 @@
 # Changelog
 
+## v0.2.0
+
+[compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.1.2...v0.2.0)
+
+### 🚀 Enhancements
+
+- ⚠️  One level unwrap transform for `pre` tag ([1a93558](https://github.com/pi0/nuxt-shiki/commit/1a93558))
+
+### 🔥 Performance
+
+- Default to single theme ([46ca451](https://github.com/pi0/nuxt-shiki/commit/46ca451))
+
+### 🩹 Fixes
+
+- Resolve `shiki-config.mjs` to full path ([#12](https://github.com/pi0/nuxt-shiki/pull/12))
+- Merge user custom transformers ([b771e9e](https://github.com/pi0/nuxt-shiki/commit/b771e9e))
+
+### 💅 Refactors
+
+- ⚠️  Improve options and support multi theme ([90ed1fb](https://github.com/pi0/nuxt-shiki/commit/90ed1fb))
+
+### 🏡 Chore
+
+- **release:** V0.1.2 ([c20e1d0](https://github.com/pi0/nuxt-shiki/commit/c20e1d0))
+- Remove log ([2126500](https://github.com/pi0/nuxt-shiki/commit/2126500))
+
+### ✅ Tests
+
+- Update tests ([f228169](https://github.com/pi0/nuxt-shiki/commit/f228169))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  One level unwrap transform for `pre` tag ([1a93558](https://github.com/pi0/nuxt-shiki/commit/1a93558))
+- ⚠️  Improve options and support multi theme ([90ed1fb](https://github.com/pi0/nuxt-shiki/commit/90ed1fb))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v0.1.2
 
 [compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.1.1...v0.1.2)
