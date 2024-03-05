@@ -94,7 +94,7 @@ export default defineNuxtModule<ModuleOptions>({
     ).filter(Boolean)
 
     const highlightOptions: CodeToHastOptions =
-      typeof options.defaultTheme === 'string'
+      !options.defaultTheme || typeof options.defaultTheme === 'string'
         ? {
             lang: options.defaultLang || bundledLangs[0] || 'javascript',
             theme: options.defaultTheme || bundledThemes[0] || 'min-dark',
