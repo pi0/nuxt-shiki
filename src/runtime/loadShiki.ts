@@ -1,5 +1,5 @@
-import type { CodeToHastOptions } from 'shiki'
-import type { ShikiConfig, ShikiInstance } from './types'
+import type { ShikiTransformer } from 'shiki'
+import type { HighlightOptions, ShikiConfig, ShikiInstance } from './types'
 
 declare global {
   // eslint-disable-next-line no-var
@@ -54,18 +54,37 @@ async function _loadShiki(): Promise<ShikiInstance> {
   const highlighter = await getHighlighterCore($config.coreOptions).then(
     (h) => ({
       ...h,
-      highlight: (
-        code: string,
-        highlightOptions: Partial<CodeToHastOptions>,
-      ) => {
+      highlight: (code: string, highlightOptions: HighlightOptions) => {
+        console.log('>', highlightOptions.unwrap)
         return h.codeToHtml(code, {
           ...$config.highlightOptions,
           ...highlightOptions,
           lang: highlightOptions.lang || $config.highlightOptions.lang,
+          transformers: highlightOptions.unwrap ? [unwrap] : [],
         })
       },
     }),
   )
 
   return highlighter
+}
+
+const unwrap: ShikiTransformer = {
+  name: 'unwrap',
+  root: (root) => {
+    const preEl = root.children[0] as any
+    const codeEl = preEl.children[0]
+    return {
+      type: 'root',
+      children: [
+        {
+          ...codeEl,
+          properties: {
+            ...preEl.properties,
+            ...codeEl.properties,
+          },
+        },
+      ],
+    }
+  },
 }

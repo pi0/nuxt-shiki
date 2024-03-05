@@ -4,13 +4,6 @@ const code = ref<string>(/*js*/ `
 console.log('Hello, World!')
 `)
 
-onMounted(() => {
-  const editor = document.querySelector('#editor')!
-  // Challenge: Can we preserve the cursor position when the code changes? :D
-  editor?.addEventListener('input', () => {
-    code.value = editor.textContent || ''
-  })
-})
 </script>
 
 <template>
@@ -19,7 +12,7 @@ onMounted(() => {
       <textarea v-model="code" />
     </div>
     <div class="highlighted-code">
-      <Shiki id="editor" contenteditable :code="code" />
+      <Shiki id="shiki" lang="js" :code="code" />
     </div>
   </main>
 </template>

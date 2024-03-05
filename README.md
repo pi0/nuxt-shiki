@@ -58,7 +58,7 @@ You can use `<Shiki>` component to highlight code in your Vue app:
 </template>
 ```
 
-The component will render a `div` tag with highlighted code inside.
+The component will render a `pre` tag with highlighted code inside.
 
 You can use the `as` prop to render a different tag:
 
@@ -67,6 +67,8 @@ You can use the `as` prop to render a different tag:
   <Shiki lang="js" code="console.log('hello');" as="span" />
 </template>
 ```
+
+If `unwrap` prop is set to `true` or `as` is `pre`, it will automatically unwrap the code props to top level.
 
 Additionally you can use `highlightOptions` prop to set shiki highlight options.
 

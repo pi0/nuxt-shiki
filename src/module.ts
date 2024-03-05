@@ -10,6 +10,7 @@ import {
 import type { Nuxt } from '@nuxt/schema'
 import type { BundledLanguage, BundledTheme, CodeToHastOptions } from 'shiki'
 import { name, version } from '../package.json'
+import type { HighlightOptions } from './runtime/types'
 
 export interface ModuleOptions {
   /** Themes */
@@ -27,7 +28,7 @@ export interface ModuleOptions {
   defaultLang?: BundledLanguage
 
   /** Additional highlight options */
-  highlightOptions?: Partial<CodeToHastOptions>
+  highlightOptions?: HighlightOptions
 
   /**
    * Alias of languages

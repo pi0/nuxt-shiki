@@ -1,6 +1,6 @@
 import { ref, watchEffect, watch, toRef, type Ref } from 'vue'
 import { loadShiki } from './loadShiki'
-import type { CodeToHastOptions } from 'shiki'
+import type { HighlightOptions } from './types'
 
 /**
  * Return a lazy highlighted code ref (only usable in Vue)
@@ -15,7 +15,7 @@ import type { CodeToHastOptions } from 'shiki'
  */
 export async function useHighlighted(
   code: string | Ref<string>,
-  options: Partial<CodeToHastOptions> & { highlighted?: string } = {},
+  options: HighlightOptions & { highlighted?: string } = {},
 ) {
   const _code = toRef(code)
 
