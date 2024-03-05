@@ -55,7 +55,6 @@ async function _loadShiki(): Promise<ShikiInstance> {
     (h) => ({
       ...h,
       highlight: (code: string, highlightOptions: HighlightOptions) => {
-        console.log('>', highlightOptions.unwrap)
         return h.codeToHtml(code, {
           ...$config.highlightOptions,
           ...highlightOptions,
