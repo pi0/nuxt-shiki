@@ -59,7 +59,10 @@ async function _loadShiki(): Promise<ShikiInstance> {
           ...$config.highlightOptions,
           ...highlightOptions,
           lang: highlightOptions.lang || $config.highlightOptions.lang,
-          transformers: highlightOptions.unwrap ? [unwrap] : [],
+          transformers: [
+            ...(highlightOptions.unwrap ? [unwrap] : []),
+            ...(highlightOptions.transformers || []),
+          ],
         })
       },
     }),
