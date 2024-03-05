@@ -1,12 +1,5 @@
-import type { HighlighterCore, HighlighterCoreOptions } from 'shiki/core'
-
-type ShikiInstance = HighlighterCore & {
-  $defaults: { theme: string; lang: string }
-  $config: HighlighterCoreOptions & {
-    defaultTheme: string
-    defaultLang: string
-  }
-}
+import type { CodeToHastOptions } from 'shiki'
+import type { ShikiConfig, ShikiInstance } from './types'
 
 declare global {
   // eslint-disable-next-line no-var
@@ -19,26 +12,20 @@ declare global {
  * You can use this utility both in `server/` and vue app code.
  *
  * @example
- *
  * ```vue
-<script setup>
-const shiki = await loadShiki();
-const html = shiki.codeToHtml('const hello = "shiki";', {
-  ...$shiki.$defaults,
-  lang: "javascript",
-});
-</script>
+ * <script setup>
+ * const shiki = await loadShiki()
+ * const html = shiki.highlight(`const hello = 'shiki'`, { lang: 'js' })
+ * </script>
  * ```
  *
  * @example
- *
  * ```ts
-// server/api/highlight.ts
-
-export default defineEventHandler(async (event) => {
-  const shiki = await loadShiki();
-  return shiki.codeToHtml('const hello = "shiki"', { ...$shiki.$defaults });
-});
+ * // server/api/highlight.ts
+ * export default defineEventHandler(async (event) => {
+ *   const shiki = await loadShiki()
+ *   return shiki.highlight(`const hello = 'shiki'`, { lang: 'js' })
+ * })
  * ```
  */
 export async function loadShiki(): Promise<ShikiInstance> {
@@ -54,7 +41,9 @@ async function _loadShiki(): Promise<ShikiInstance> {
   const [{ loadWasm, getHighlighterCore }, { loadShikiConfig }] =
     await Promise.all([
       import('shiki/core'),
-      import('shiki-config.mjs' as string),
+      import('shiki-config.mjs' as string) as Promise<{
+        loadShikiConfig: () => Promise<ShikiConfig>
+      }>,
     ])
 
   const [$config] = await Promise.all([
@@ -62,11 +51,21 @@ async function _loadShiki(): Promise<ShikiInstance> {
     loadWasm(import('shiki/wasm' as string)),
   ])
 
-  const highlighter = await getHighlighterCore($config).then((h) => ({
-    $config,
-    $defaults: $config.defaults,
-    ...h,
-  }))
+  const highlighter = await getHighlighterCore($config.coreOptions).then(
+    (h) => ({
+      ...h,
+      highlight: (
+        code: string,
+        highlightOptions: Partial<CodeToHastOptions>,
+      ) => {
+        return h.codeToHtml(code, {
+          ...$config.highlightOptions,
+          ...highlightOptions,
+          lang: highlightOptions.lang || $config.highlightOptions.lang,
+        })
+      },
+    }),
+  )
 
   return highlighter
 }

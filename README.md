@@ -18,7 +18,7 @@
 > [!IMPORTANT]
 > This module is under development!
 
-## Quick Setup
+## Quick setup
 
 Add Nuxt module:
 
@@ -36,26 +36,25 @@ Options can be configured using `shiki` key in `nuxt.config`:
 export default defineNuxtConfig({
   modules: ['nuxt-shiki'],
   shiki: {
-    theme: 'github-light',
-    lang: 'javascript',
-    themes: [],
-    langs: [],
+    /* shiki options */
   },
 })
 ```
 
-- `themes` and `langs` can be configured to set bundled themes and languages.
-- `theme` and `lang` can be configured to set default theme and language.
+Available options:
 
-**Tip:** You can access configurations and defaults in runtime using `shiki.$config` and `shiki.$defaults`.
+- `bundledThemes` and `bundledLangs` can be configured to set bundled themes and languages.
+- `defaultTheme` and `defaultLang` can be configured to set default theme and language.
+- `langAlias` can be configured to set language aliases.
+- `highlightOptions` can be configured to set highlight defaults.
 
-## Shiki Component
+## `<Shiki>` component
 
 You can use `<Shiki>` component to highlight code in your Vue app:
 
 ```vue
 <template>
-  <Shiki code="console.log('hello');" lang="js" />
+  <Shiki lang="js" code="console.log('hello');" />
 </template>
 ```
 
@@ -65,15 +64,11 @@ You can use the `as` prop to render a different tag:
 
 ```vue
 <template>
-  <Shiki code="console.log('hello');" lang="js" as="span" />
+  <Shiki lang="js" code="console.log('hello');" as="span" />
 </template>
 ```
 
-Other props:
-
-- `theme`
-- `themes`
-- `options
+Additionally you can use `highlightOptions` prop to set shiki highlight options.
 
 ## Utils
 
@@ -89,11 +84,8 @@ You can use this utility both in `server/` and vue app code.
 
 ```vue
 <script setup>
-const shiki = await loadShiki();
-const html = shiki.codeToHtml('const hello = "shiki";', {
-  ...$shiki.$defaults,
-  lang: "javascript",
-});
+const shiki = await loadShiki()
+const html = shiki.highlight(`const hello = 'shiki'`, { lang: 'js' })
 </script>
 ```
 
@@ -101,11 +93,10 @@ const html = shiki.codeToHtml('const hello = "shiki";', {
 
 ```ts
 // server/api/highlight.ts
-
 export default defineEventHandler(async (event) => {
-  const shiki = await loadShiki();
-  return shiki.codeToHtml('const hello = "shiki"', { ...$shiki.$defaults });
-});
+  const shiki = await loadShiki()
+  return shiki.highlight(`const hello = 'shiki'`, { lang: 'js' })
+})
 ```
 
 ### `useHighlighted(code, options)`
@@ -116,8 +107,8 @@ Return a lazy highlighted code ref (only usable in Vue)
 
 ```vue
 <script setup>
-const code = ref('const hello = "shiki";');
-const highlighted = await useHighlighted(code);
+const code = ref(`const hello = 'shiki'`)
+const highlighted = await useHighlighted(code)
 </script>
 ```
 

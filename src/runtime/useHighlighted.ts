@@ -1,24 +1,23 @@
-import { ref, watchEffect, watch, isRef, type Ref } from 'vue'
-import type { CodeToHastOptions } from 'shiki/core'
+import { ref, watchEffect, watch, toRef, type Ref } from 'vue'
 import { loadShiki } from './loadShiki'
+import type { CodeToHastOptions } from 'shiki'
 
 /**
  * Return a lazy highlighted code ref (only usable in Vue)
  *
  * @example
- *
  * ```vue
-<script setup>
-const code = ref('const hello = "shiki";');
-const highlighted = await useHighlighted(code);
-</script>
+ * <script setup>
+ * const code = ref(`const hello = 'shiki'`)
+ * const highlighted = await useHighlighted(code)
+ * </script>
  * ```
  */
 export async function useHighlighted(
   code: string | Ref<string>,
   options: Partial<CodeToHastOptions> & { highlighted?: string } = {},
 ) {
-  const _code = isRef(code) ? code : ref(code)
+  const _code = toRef(code)
 
   if ('themes' in options && !options.themes) {
     delete options.themes // shiki bug?
@@ -26,12 +25,7 @@ export async function useHighlighted(
 
   if (import.meta.server) {
     const shiki = await loadShiki()
-    return ref(
-      shiki.codeToHtml(_code.value, {
-        ...shiki.$defaults,
-        ...options,
-      }),
-    )
+    return ref(shiki.highlight(_code.value, options))
   }
 
   const highlighted = ref(options.highlighted || '')
@@ -48,10 +42,7 @@ export async function useHighlighted(
   function init() {
     loadShiki().then((shiki) => {
       watchEffect(() => {
-        highlighted.value = shiki.codeToHtml(_code.value, {
-          ...shiki.$defaults,
-          ...options,
-        })
+        highlighted.value = shiki.highlight(_code.value, options)
       })
     })
   }

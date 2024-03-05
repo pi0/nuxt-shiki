@@ -1,30 +1,14 @@
 import { defineComponent, h, ref, toRef, getCurrentInstance } from 'vue'
-import type { Ref } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { useHighlighted } from '#imports'
+import type { BundledLanguage, CodeToHastOptions } from 'shiki'
 
 export default defineComponent({
   props: {
-    code: {
-      type: String,
-      required: true,
-    },
-    lang: {
-      type: String,
-      required: true,
-    },
-    as: {
-      type: String,
-      default: 'div',
-    },
-    theme: {
-      type: String,
-    },
-    themes: {
-      type: Object,
-    },
-    options: {
-      type: Object,
-    },
+    code: String,
+    lang: String as PropType<BundledLanguage>,
+    highlightOptions: Object as PropType<Partial<CodeToHastOptions>>,
+    as: { type: String, default: 'div' },
   },
   async setup(props) {
     const el = ref() as Ref<HTMLElement>
@@ -36,9 +20,7 @@ export default defineComponent({
     const highlighted = await useHighlighted(toRef(props, 'code'), {
       lang: props.lang,
       highlighted: hydratedCode,
-      theme: props.theme,
-      themes: props.themes || undefined,
-      ...props.options,
+      ...props.highlightOptions,
     })
 
     return { el, highlighted }

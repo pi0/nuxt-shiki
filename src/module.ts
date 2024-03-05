@@ -8,18 +8,32 @@ import {
   addComponent,
 } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
-import type { BundledLanguage, BundledTheme } from 'shiki'
+import type { BundledLanguage, BundledTheme, CodeToHastOptions } from 'shiki'
 import { name, version } from '../package.json'
 
 export interface ModuleOptions {
   /** Themes */
-  themes: BundledTheme[]
+  bundledThemes?: BundledTheme[]
+
   /** Languages */
-  langs: BundledLanguage[]
+  bundledLangs?: BundledLanguage[]
+
   /** Default theme */
-  theme: BundledTheme
+  defaultTheme?:
+    | BundledTheme
+    | Record<'dark' | 'light' | 'default' | (string & {}), BundledTheme>
+
   /** Default language */
-  lang: BundledLanguage
+  defaultLang?: BundledLanguage
+
+  /** Additional highlight options */
+  highlightOptions?: Partial<CodeToHastOptions>
+
+  /**
+   * Alias of languages
+   * @example { 'my-lang': 'javascript' }
+   */
+  langAlias?: Record<string, string>
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -29,10 +43,8 @@ export default defineNuxtModule<ModuleOptions>({
     configKey: 'shiki',
   },
   defaults: {
-    themes: [],
-    langs: [],
-    theme: 'github-light',
-    lang: 'javascript',
+    bundledLangs: ['typescript', 'javascript', 'json'],
+    bundledThemes: ['min-light', 'min-dark'],
   },
   setup(options, nuxt) {
     // @ts-ignore
@@ -67,33 +79,61 @@ export default defineNuxtModule<ModuleOptions>({
     ])
 
     // Shiki config
-    const themes = Array.from(new Set([options.theme, ...options.themes]))
-    const langs = Array.from(new Set([options.lang, ...options.langs]))
+    const bundledThemes = Array.from(
+      new Set([
+        ...(options.bundledThemes || []),
+        ...(typeof options.defaultTheme === 'string'
+          ? [options.defaultTheme]
+          : Object.values(options.defaultTheme || {})),
+      ]),
+    ).filter(Boolean)
 
-    // Add config template
+    const bundledLangs = Array.from(
+      new Set([...(options.bundledLangs || []), options.defaultLang]),
+    ).filter(Boolean)
+
+    const highlightOptions: CodeToHastOptions =
+      typeof options.defaultTheme === 'string'
+        ? {
+            lang: options.defaultLang || bundledLangs[0] || 'javascript',
+            theme: options.defaultTheme || bundledThemes[0] || 'min-dark',
+            ...options.highlightOptions,
+          }
+        : {
+            lang: options.defaultLang || bundledLangs[0] || 'javascript',
+            themes: {
+              ...options.defaultTheme,
+              light: bundledThemes[0] || 'min-light',
+              dark: bundledThemes[1] || bundledThemes[0] || 'min-dark',
+            },
+            ...options.highlightOptions,
+          }
+
     const template = addTemplate({
       filename: 'shiki-config.mjs',
       getContents: () => {
         return `
 export async function loadShikiConfig() {
+  const [themes, langs] = await Promise.all([
+    Promise.all([
+${bundledThemes.map((theme) => `${' '.repeat(6)}import("shiki/themes/${theme}.mjs"),`).join('\n')}
+    ]),
+    Promise.all([
+${bundledLangs.map((lang) => `${' '.repeat(6)}import("shiki/langs/${lang}.mjs"),`).join('\n')}
+    ]),
+  ]);
   return {
-    defaults: {
-      lang: "${options.lang}",
-      theme: "${options.theme}",
+    highlightOptions: ${JSON.stringify(highlightOptions)},
+    coreOptions: {
+      themes,
+      langs,
+      langAlias: ${JSON.stringify(options.langAlias)},
     },
-    themes: await Promise.all([
-      ${themes
-        .map((theme) => `import("shiki/themes/${theme}.mjs"),`)
-        .join('\n')}
-    ]),
-    langs: await Promise.all([
-      ${langs.map((lang) => `import("shiki/langs/${lang}.mjs"),`).join('\n')}
-    ]),
   };
 }`
       },
     })
-    // TODO: It shouldn't be this hard to have a shared/working virtual module
+
     nuxt.options.nitro.virtual = nuxt.options.nitro.virtual || {}
     nuxt.options.nitro.virtual['shiki-config.mjs'] = template.getContents
     nuxt.options.alias['shiki-config.mjs'] = template.dst
