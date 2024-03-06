@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.2.1
+
+[compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.2.0...v0.2.1)
+
+### 🩹 Fixes
+
+- Respect `light` and `dark` from `defaultTheme` ([9f1828b](https://github.com/pi0/nuxt-shiki/commit/9f1828b))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v0.2.0
 
 [compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.1.2...v0.2.0)
