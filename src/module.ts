@@ -22,7 +22,7 @@ export interface ModuleOptions {
   /** Default theme */
   defaultTheme?:
     | BundledTheme
-    | Record<'dark' | 'light' | 'default' | (string & {}), BundledTheme>
+    | Record<'dark' | 'light' | (string & {}), BundledTheme>
 
   /** Default language */
   defaultLang?: BundledLanguage
@@ -104,8 +104,13 @@ export default defineNuxtModule<ModuleOptions>({
             lang: options.defaultLang || bundledLangs[0] || 'javascript',
             themes: {
               ...options.defaultTheme,
-              light: bundledThemes[0] || 'min-light',
-              dark: bundledThemes[1] || bundledThemes[0] || 'min-dark',
+              light:
+                options.defaultTheme.light || bundledThemes[0] || 'min-light',
+              dark:
+                options.defaultTheme.dark ||
+                bundledThemes[1] ||
+                bundledThemes[0] ||
+                'min-dark',
             },
             ...options.highlightOptions,
           }
