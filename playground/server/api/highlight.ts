@@ -1,7 +1,7 @@
-import { loadShiki, getQuery } from '#imports'
+import { getShikiHighlighter, getQuery } from '#imports'
 
 export default defineEventHandler(async (event) => {
-  const shiki = await loadShiki()
+  const highlighter = await getShikiHighlighter()
   const { code = '// code', lang } = getQuery(event)
-  return shiki.highlight(code as string, { lang: lang as string })
+  return highlighter.highlight(code as string, { lang: lang as string })
 })

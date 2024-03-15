@@ -51,31 +51,30 @@ export default defineNuxtModule<ModuleOptions>({
     // @ts-ignore
     const resolver = createResolver(import.meta.url)
 
-    // (not needed after Nitro 2.9)
+    // (until nitro wasm support is in experimental state)
     addUnwasmSupport(nuxt)
 
     // Add component
     addComponent({
-      filePath: resolver.resolve('./runtime/Shiki'),
+      filePath: resolver.resolve('./runtime/component'),
       name: 'Shiki',
     })
 
-    // Add imports
+    // Add utils auto imports
     addImports([
       {
-        name: 'loadShiki',
-        from: resolver.resolve('./runtime/loadShiki'),
+        name: 'getShikiHighlighter',
+        from: resolver.resolve('./runtime/utils'),
       },
       {
-        name: 'useHighlighted',
-        from: resolver.resolve('./runtime/useHighlighted'),
+        name: 'useShikiHighlighted',
+        from: resolver.resolve('./runtime/utils'),
       },
     ])
-
     addServerImports([
       {
-        name: 'loadShiki',
-        from: resolver.resolve('./runtime/loadShiki'),
+        name: 'getShikiHighlighter',
+        from: resolver.resolve('./runtime/utils'),
       },
     ])
 
@@ -116,10 +115,10 @@ export default defineNuxtModule<ModuleOptions>({
           }
 
     const template = addTemplate({
-      filename: 'shiki-config.mjs',
+      filename: 'shiki-options.mjs',
       getContents: () => {
         return `
-export async function loadShikiConfig() {
+export async function getShikiHighlighterOptions() {
   const [themes, langs] = await Promise.all([
     Promise.all([
 ${bundledThemes.map((theme) => `${' '.repeat(6)}import("shiki/themes/${theme}.mjs"),`).join('\n')}
@@ -129,8 +128,8 @@ ${bundledLangs.map((lang) => `${' '.repeat(6)}import("shiki/langs/${lang}.mjs"),
     ]),
   ]);
   return {
-    highlightOptions: ${JSON.stringify(highlightOptions)},
-    coreOptions: {
+    highlight: ${JSON.stringify(highlightOptions)},
+    core: {
       themes,
       langs,
       langAlias: ${JSON.stringify(options.langAlias)},
@@ -141,8 +140,8 @@ ${bundledLangs.map((lang) => `${' '.repeat(6)}import("shiki/langs/${lang}.mjs"),
     })
 
     nuxt.options.nitro.virtual = nuxt.options.nitro.virtual || {}
-    nuxt.options.nitro.virtual['shiki-config.mjs'] = template.getContents
-    nuxt.options.alias['shiki-config.mjs'] = template.dst
+    nuxt.options.nitro.virtual['shiki-options.mjs'] = template.getContents
+    nuxt.options.alias['shiki-options.mjs'] = template.dst
   },
 })
 

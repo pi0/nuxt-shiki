@@ -7,7 +7,7 @@
 
 <!-- /automd -->
 
-[Nuxt](https://nuxt.com/) + [Shiki](https://shiki.style/) syntax highlighter!
+[Nuxt](https://nuxt.com/) + [Shiki](https://highlighterstyle/) syntax highlighter!
 
 ## Features
 
@@ -74,9 +74,9 @@ Additionally you can use `highlightOptions` prop to set shiki highlight options.
 
 ## Utils
 
-<!-- automd:jsdocs src=./src/runtime/index -->
+<!-- automd:jsdocs src=./src/runtime/utils -->
 
-### `loadShiki()`
+### `getShikiHighlighter()`
 
 Lazy-load shiki instance.
 
@@ -86,8 +86,8 @@ You can use this utility both in `server/` and vue app code.
 
 ```vue
 <script setup>
-const shiki = await loadShiki()
-const html = shiki.highlight(`const hello = 'shiki'`, { lang: 'js' })
+const highlighter = await getShikiHighlighter()
+const html = highlighter.highlight(`const hello = 'shiki'`, { lang: 'js' })
 </script>
 ```
 
@@ -96,12 +96,12 @@ const html = shiki.highlight(`const hello = 'shiki'`, { lang: 'js' })
 ```ts
 // server/api/highlight.ts
 export default defineEventHandler(async (event) => {
-  const shiki = await loadShiki()
-  return shiki.highlight(`const hello = 'shiki'`, { lang: 'js' })
+  const highlighter = await getShikiHighlighter()
+  return highlighter.highlight(`const hello = 'shiki'`, { lang: 'js' })
 })
 ```
 
-### `useHighlighted(code, options)`
+### `useShikiHighlighted(code, options)`
 
 Return a lazy highlighted code ref (only usable in Vue)
 
@@ -110,7 +110,7 @@ Return a lazy highlighted code ref (only usable in Vue)
 ```vue
 <script setup>
 const code = ref(`const hello = 'shiki'`)
-const highlighted = await useHighlighted(code)
+const highlighted = await useShikiHighlighted(code)
 </script>
 ```
 
