@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^3.10.3",
+    "knitwork": "^1.0.0",
     "shiki": "^1.1.7",
     "unwasm": "^0.3.8"
   },

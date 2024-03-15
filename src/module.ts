@@ -11,6 +11,7 @@ import type { Nuxt } from '@nuxt/schema'
 import type { BundledLanguage, BundledTheme, CodeToHastOptions } from 'shiki'
 import { name, version } from '../package.json'
 import type { HighlightOptions } from './runtime/types'
+import { genSafeVariableName } from 'knitwork'
 
 export interface ModuleOptions {
   /** Themes */
@@ -117,25 +118,19 @@ export default defineNuxtModule<ModuleOptions>({
     const template = addTemplate({
       filename: 'shiki-options.mjs',
       getContents: () => {
-        return `
-export async function getShikiHighlighterOptions() {
-  const [themes, langs] = await Promise.all([
-    Promise.all([
-${bundledThemes.map((theme) => `${' '.repeat(6)}import("shiki/themes/${theme}.mjs"),`).join('\n')}
-    ]),
-    Promise.all([
-${bundledLangs.map((lang) => `${' '.repeat(6)}import("shiki/langs/${lang}.mjs"),`).join('\n')}
-    ]),
-  ]);
-  return {
-    highlight: ${JSON.stringify(highlightOptions)},
-    core: {
-      themes,
-      langs,
-      langAlias: ${JSON.stringify(options.langAlias)},
-    },
-  };
-}`
+        return /* js */ `
+${bundledThemes.map((theme) => /* js */ `import { default as _theme_${genSafeVariableName(theme)} } from "shiki/themes/${theme}.mjs";`).join('\n')}
+${bundledLangs.map((lang) => /* js */ `import { default as _lang_${genSafeVariableName(lang!)} } from "shiki/langs/${lang}.mjs";`).join('\n')}
+
+export const shikiOptions = {
+  highlight: ${JSON.stringify(highlightOptions, null, 2)},
+  core: {
+    themes: [${bundledThemes.map((theme) => `_theme_${genSafeVariableName(theme)}`).join(', ')}],
+    langs: [${bundledLangs.map((lang) => `_lang_${genSafeVariableName(lang!)}`).join(', ')}],
+    langAlias: ${JSON.stringify(options.langAlias)},
+  },
+};
+`
       },
     })
 

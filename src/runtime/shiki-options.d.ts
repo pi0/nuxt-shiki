@@ -6,4 +6,4 @@
 
 import type { ShikiOptions } from './types'
 
-export declare function getShikiHighlighterOptions(): Promise<ShikiOptions>
+export declare const shikiOptions: ShikiOptions
