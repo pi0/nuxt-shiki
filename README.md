@@ -7,7 +7,7 @@
 
 <!-- /automd -->
 
-[Nuxt](https://nuxt.com/) + [Shiki](https://highlighterstyle/) syntax highlighter!
+[Nuxt](https://nuxt.com/) + [Shiki](https://shiki.style/) syntax highlighter!
 
 ## Features
 
