@@ -24,7 +24,7 @@ body {
 </style>
 
 <style>
-/* https://highlighterstyle/guide/dual-themes#query-based-dark-mode */
+/* https://shiki.style/guide/dual-themes#query-based-dark-mode */
 @media (prefers-color-scheme: dark) {
 
   .shiki,
