@@ -5,7 +5,7 @@ const _importShikiCore = cached(() => import('shiki/core'))
 const _importWasm = cached(() => import('shiki/wasm'))
 
 export const createHighlighter = cached<ShikiHighlighter>(
-  async (_shikiOptions: MaybePromise<ShikiOptions>, _key?: string) => {
+  async (_shikiOptions: MaybePromise<ShikiOptions>) => {
     const [{ getHighlighterCore }, wasm, shikiOptions] = await Promise.all([
       _importShikiCore(),
       _importWasm(),
