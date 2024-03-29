@@ -2,8 +2,8 @@
 
 <!-- automd:badges -->
 
-[![npm version](https://flat.badgen.net/npm/v/nuxt-shiki)](https://npmjs.com/package/nuxt-shiki)
-[![npm downloads](https://flat.badgen.net/npm/dm/nuxt-shiki)](https://npmjs.com/package/nuxt-shiki)
+[![npm version](https://img.shields.io/npm/v/nuxt-shiki)](https://npmjs.com/package/nuxt-shiki)
+[![npm downloads](https://img.shields.io/npm/dm/nuxt-shiki)](https://npmjs.com/package/nuxt-shiki)
 
 <!-- /automd -->
 
