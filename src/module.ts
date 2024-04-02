@@ -150,6 +150,7 @@ function addUnwasmSupport(nuxt: Nuxt) {
       _nitro.options.externals = _nitro.options.externals || {}
       _nitro.options.externals.inline = _nitro.options.externals.inline || []
       _nitro.options.externals.inline.push((id) => id.endsWith('.wasm'))
+      _nitro.options.exportConditions.push('unwasm')
       _nitro.hooks.hook('rollup:before', async (_, rollupConfig) => {
         const { rollup: unwasm } = await import('unwasm/plugin')
         rollupConfig.plugins = rollupConfig.plugins || []
