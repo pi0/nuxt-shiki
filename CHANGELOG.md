@@ -1,5 +1,51 @@
 # Changelog
 
+## v0.3.0
+
+[compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.2.1...v0.3.0)
+
+### 🔥 Performance
+
+- Resuce loading request waterfall ([#18](https://github.com/pi0/nuxt-shiki/pull/18))
+- Update shiki ([b998ede](https://github.com/pi0/nuxt-shiki/commit/b998ede))
+
+### 🩹 Fixes
+
+- Add `unwasm` condition ([#23](https://github.com/pi0/nuxt-shiki/pull/23))
+- Force trace `shiki/dist/core.mjs` ([fe89655](https://github.com/pi0/nuxt-shiki/commit/fe89655))
+
+### 💅 Refactors
+
+- ⚠️  Improve api ([bfc0b61](https://github.com/pi0/nuxt-shiki/commit/bfc0b61))
+
+### 📖 Documentation
+
+- Fix 404 link ([ba205f6](https://github.com/pi0/nuxt-shiki/commit/ba205f6))
+- Fix 404 link ([f585641](https://github.com/pi0/nuxt-shiki/commit/f585641))
+
+### 🏡 Chore
+
+- Fix case ([526fc37](https://github.com/pi0/nuxt-shiki/commit/526fc37))
+- Update lockfile ([aad4cb9](https://github.com/pi0/nuxt-shiki/commit/aad4cb9))
+- Update lockfile ([02bfb05](https://github.com/pi0/nuxt-shiki/commit/02bfb05))
+- Update deps ([b46d01b](https://github.com/pi0/nuxt-shiki/commit/b46d01b))
+- Fix lint issue ([3e39d87](https://github.com/pi0/nuxt-shiki/commit/3e39d87))
+- Apply automated fixes ([a2d06a0](https://github.com/pi0/nuxt-shiki/commit/a2d06a0))
+- Update lockfile ([cdf4109](https://github.com/pi0/nuxt-shiki/commit/cdf4109))
+
+### ✅ Tests
+
+- Update snapshot ([fa4ebac](https://github.com/pi0/nuxt-shiki/commit/fa4ebac))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Improve api ([bfc0b61](https://github.com/pi0/nuxt-shiki/commit/bfc0b61))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Sébastien Chopin <seb@nuxtlabs.com>
+
 ## v0.2.1
 
 [compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.2.0...v0.2.1)
