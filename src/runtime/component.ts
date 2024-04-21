@@ -1,14 +1,14 @@
-import { defineComponent, h, ref, toRef, getCurrentInstance } from 'vue'
+import { defineComponent, h, ref, getCurrentInstance } from 'vue'
 import type { PropType, Ref } from 'vue'
 import { useShikiHighlighted } from './utils'
 import type { BundledLanguage } from 'shiki'
-import type { HighlightOptions } from './types'
+import type { UseHighlightOptions } from './types'
 
 export default defineComponent({
   props: {
     code: String,
     lang: String as PropType<BundledLanguage>,
-    highlightOptions: Object as PropType<HighlightOptions>,
+    highlightOptions: Object as PropType<UseHighlightOptions>,
     as: { type: String, default: 'pre' },
     unwrap: { type: Boolean, default: undefined },
   },
@@ -19,8 +19,8 @@ export default defineComponent({
       ? getCurrentInstance()?.vnode?.el?.innerHTML
       : undefined
 
-    const highlighted = await useShikiHighlighted(toRef(props, 'code'), {
-      lang: props.lang,
+    const highlighted = await useShikiHighlighted(() => props.code, {
+      lang: () => props.lang,
       highlighted: hydratedCode,
       unwrap: props.unwrap ?? props.as === 'pre',
       ...props.highlightOptions,

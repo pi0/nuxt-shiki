@@ -1,5 +1,5 @@
-import { ref, watchEffect, watch, toRef, type Ref } from 'vue'
-import type { HighlightOptions, ShikiHighlighter } from './types'
+import { ref, watch, toValue, type MaybeRefOrGetter } from 'vue'
+import type { UseHighlightOptions, ShikiHighlighter } from './types'
 import { createHighlighter } from './shiki'
 
 /**
@@ -43,38 +43,39 @@ export async function getShikiHighlighter(): Promise<ShikiHighlighter> {
  * ```
  */
 export async function useShikiHighlighted(
-  code: string | undefined | Ref<string | undefined>,
-  options: HighlightOptions & { highlighted?: string } = {},
+  code: MaybeRefOrGetter<string | undefined>,
+  options: UseHighlightOptions = {},
 ) {
-  const _code = toRef(code)
-
   if ('themes' in options && !options.themes) {
     delete options.themes
   }
 
   if (import.meta.server) {
     const highlighter = await getShikiHighlighter()
-    return ref(highlighter.highlight(_code.value || '', options))
+    return ref(highlighter.highlight(toValue(code) || '', {
+      ...options,
+      lang: toValue(options.lang),
+      theme: toValue(options.theme),
+    }))
   }
 
   const highlighted = ref(options.highlighted || '')
+  const immediate = Boolean(highlighted.value)
 
-  if (highlighted.value) {
-    const unwatch = watch(_code, () => {
-      unwatch()
-      init()
+  watch([
+    () => toValue(code),
+    () => toValue(options.lang),
+    () => toValue(options.theme),
+  ], async ([_code, lang, theme]) => {
+    const highlighter = await getShikiHighlighter()
+    highlighted.value = highlighter.highlight(_code || '', {
+      ...options,
+      lang,
+      theme,
     })
-  } else {
-    await init()
-  }
-
-  function init() {
-    getShikiHighlighter().then((highlighter) => {
-      watchEffect(() => {
-        highlighted.value = highlighter.highlight(_code.value || '', options)
-      })
-    })
-  }
+  }, {
+    immediate,
+  })
 
   return highlighted
 }
