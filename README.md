@@ -45,6 +45,7 @@ Available options:
 
 - `bundledThemes` and `bundledLangs` can be configured to set bundled themes and languages.
 - `defaultTheme` and `defaultLang` can be configured to set default theme and language.
+- `dynamic` can be configured to set whether languages are dynamically loaded. (in this way, all languages will be bundled)
 - `langAlias` can be configured to set language aliases.
 - `highlightOptions` can be configured to set highlight defaults.
 
@@ -99,6 +100,19 @@ export default defineEventHandler(async (event) => {
   const highlighter = await getShikiHighlighter()
   return highlighter.highlight(`const hello = 'shiki'`, { lang: 'js' })
 })
+```
+
+### `loadShikiLanguages(highlighter)`
+
+Dynamically loading languages when options.dynamic is true.
+
+**Example:**
+
+```vue
+<script setup>
+const highlighter = await getShikiHighlighter()
+await loadShikiLanguages(highlighter, "tsx", "vue");
+</script>
 ```
 
 ### `useShikiHighlighted(code, options)`
