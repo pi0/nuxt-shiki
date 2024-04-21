@@ -60,7 +60,7 @@ export async function useShikiHighlighted(
   }
 
   const highlighted = ref(options.highlighted || '')
-  const immediate = Boolean(highlighted.value)
+  const immediate = !highlighted.value
 
   watch([
     () => toValue(code),
