@@ -16,7 +16,7 @@
 
 ### 💅 Refactors
 
-- ⚠️  Improve api ([bfc0b61](https://github.com/pi0/nuxt-shiki/commit/bfc0b61))
+- ⚠️ Improve api ([bfc0b61](https://github.com/pi0/nuxt-shiki/commit/bfc0b61))
 
 ### 📖 Documentation
 
@@ -39,7 +39,7 @@
 
 #### ⚠️ Breaking Changes
 
-- ⚠️  Improve api ([bfc0b61](https://github.com/pi0/nuxt-shiki/commit/bfc0b61))
+- ⚠️ Improve api ([bfc0b61](https://github.com/pi0/nuxt-shiki/commit/bfc0b61))
 
 ### ❤️ Contributors
 
@@ -64,7 +64,7 @@
 
 ### 🚀 Enhancements
 
-- ⚠️  One level unwrap transform for `pre` tag ([1a93558](https://github.com/pi0/nuxt-shiki/commit/1a93558))
+- ⚠️ One level unwrap transform for `pre` tag ([1a93558](https://github.com/pi0/nuxt-shiki/commit/1a93558))
 
 ### 🔥 Performance
 
@@ -77,7 +77,7 @@
 
 ### 💅 Refactors
 
-- ⚠️  Improve options and support multi theme ([90ed1fb](https://github.com/pi0/nuxt-shiki/commit/90ed1fb))
+- ⚠️ Improve options and support multi theme ([90ed1fb](https://github.com/pi0/nuxt-shiki/commit/90ed1fb))
 
 ### 🏡 Chore
 
@@ -90,8 +90,8 @@
 
 #### ⚠️ Breaking Changes
 
-- ⚠️  One level unwrap transform for `pre` tag ([1a93558](https://github.com/pi0/nuxt-shiki/commit/1a93558))
-- ⚠️  Improve options and support multi theme ([90ed1fb](https://github.com/pi0/nuxt-shiki/commit/90ed1fb))
+- ⚠️ One level unwrap transform for `pre` tag ([1a93558](https://github.com/pi0/nuxt-shiki/commit/1a93558))
+- ⚠️ Improve options and support multi theme ([90ed1fb](https://github.com/pi0/nuxt-shiki/commit/90ed1fb))
 
 ### ❤️ Contributors
 
@@ -131,7 +131,6 @@
 - Pooya Parsa ([@pi0](http://github.com/pi0))
 
 ## v0.0.2
-
 
 ### 🚀 Enhancements
 

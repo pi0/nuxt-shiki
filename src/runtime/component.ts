@@ -15,7 +15,7 @@ export default defineComponent({
   async setup(props) {
     const el = ref() as Ref<HTMLElement>
 
-    const hydratedCode = process.client
+    const hydratedCode = import.meta.client
       ? getCurrentInstance()?.vnode?.el?.innerHTML
       : undefined
 
