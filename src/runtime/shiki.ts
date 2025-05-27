@@ -1,20 +1,21 @@
 import type { HighlightOptions, ShikiHighlighter, ShikiOptions } from './types'
 import { unwrapTransformer } from './transforms'
+import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
 
 const _importShikiCore = cached(() => import('shiki/core'))
 const _importWasm = cached(() => import('shiki/wasm'))
 
 export const createHighlighter = cached<ShikiHighlighter>(
   async (_shikiOptions: MaybePromise<ShikiOptions>) => {
-    const [{ getHighlighterCore }, wasm, shikiOptions] = await Promise.all([
+    const [{ createHighlighterCore }, wasm, shikiOptions] = await Promise.all([
       _importShikiCore(),
-      _importWasm(),
+      createOnigurumaEngine(_importWasm()),
       _shikiOptions,
     ])
 
-    const highlighter = (await getHighlighterCore({
+    const highlighter = (await createHighlighterCore({
       ...shikiOptions.core,
-      loadWasm: wasm,
+      engine: wasm,
     })) as ShikiHighlighter
 
     highlighter.highlight = (
