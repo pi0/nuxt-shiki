@@ -15,14 +15,13 @@
 
 ### 🏡 Chore
 
-- **release:** V0.3.0 ([494e84e](https://github.com/pi0/nuxt-shiki/commit/494e84e))
 - Update deps, fix lint issue ([6956042](https://github.com/pi0/nuxt-shiki/commit/6956042))
 - Update vitest ([91bf226](https://github.com/pi0/nuxt-shiki/commit/91bf226))
 - Fix lint issue ([1649fd8](https://github.com/pi0/nuxt-shiki/commit/1649fd8))
 
 ### ❤️ Contributors
 
-- Gxres042 ([@gxres042](http://github.com/gxres042))
+- Restent Ou ([@gxres042](http://github.com/gxres042))
 - Remiconnesson ([@remiconnesson](http://github.com/remiconnesson))
 - Pooya Parsa ([@pi0](http://github.com/pi0))
 
