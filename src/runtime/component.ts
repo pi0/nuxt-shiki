@@ -7,7 +7,7 @@ import type { HighlightOptions } from './types'
 export default defineComponent({
   props: {
     code: String,
-    lang: String as PropType<BundledLanguage | "text" | "txt" | "plain">,
+    lang: String as PropType<BundledLanguage | 'text' | 'txt' | 'plain'>,
     highlightOptions: Object as PropType<HighlightOptions>,
     as: { type: String, default: 'pre' },
     unwrap: { type: Boolean, default: undefined },
