@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.3.1
+
+[compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.3.0...v0.3.1)
+
+### 🔥 Performance
+
+- Update shiki ([40f2711](https://github.com/pi0/nuxt-shiki/commit/40f2711))
+- Use JavaScript RegExp engine ([8fe19ee](https://github.com/pi0/nuxt-shiki/commit/8fe19ee))
+
+### 🩹 Fixes
+
+- Accept special language "text" as a valid prop type ([#43](https://github.com/pi0/nuxt-shiki/pull/43))
+
+### 🏡 Chore
+
+- **release:** V0.3.0 ([494e84e](https://github.com/pi0/nuxt-shiki/commit/494e84e))
+- Update deps, fix lint issue ([6956042](https://github.com/pi0/nuxt-shiki/commit/6956042))
+- Update vitest ([91bf226](https://github.com/pi0/nuxt-shiki/commit/91bf226))
+- Fix lint issue ([1649fd8](https://github.com/pi0/nuxt-shiki/commit/1649fd8))
+
+### ❤️ Contributors
+
+- Gxres042 ([@gxres042](http://github.com/gxres042))
+- Remiconnesson ([@remiconnesson](http://github.com/remiconnesson))
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v0.3.0
 
 [compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.2.1...v0.3.0)
