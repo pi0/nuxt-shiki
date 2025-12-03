@@ -31,8 +31,7 @@
   "dependencies": {
     "@nuxt/kit": "^3.11.1",
     "knitwork": "^1.1.0",
-    "shiki": "^3.4.2",
-    "unwasm": "^0.3.9"
+    "shiki": "^3.4.2"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",

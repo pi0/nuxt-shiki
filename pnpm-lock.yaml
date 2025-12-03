@@ -17,9 +17,6 @@ importers:
       shiki:
         specifier: ^3.4.2
         version: 3.4.2
-      unwasm:
-        specifier: ^0.3.9
-        version: 0.3.9
     devDependencies:
       '@nuxt/devtools':
         specifier: latest
