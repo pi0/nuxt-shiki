@@ -26,6 +26,9 @@ export interface ModuleOptions {
   /** Default language */
   defaultLang?: BundledLanguage
 
+  /** Is dynamic loading enabled */
+  dynamic?: boolean
+
   /** Additional highlight options */
   highlightOptions?: HighlightOptions
 
@@ -73,6 +76,21 @@ export default defineNuxtModule<ModuleOptions>({
         from: resolver.resolve('./runtime/utils'),
       },
     ])
+
+    if (options.dynamic) {
+      addImports([
+        {
+          name: 'loadShikiLanguages',
+          from: resolver.resolve('./runtime/utils'),
+        }
+      ])
+      addServerImports([
+        {
+          name: 'loadShikiLanguages',
+          from: resolver.resolve('./runtime/utils'),
+        }
+      ])
+    }
 
     // Shiki config
     const bundledThemes = Array.from(
