@@ -26,7 +26,7 @@ import { createHighlighter } from './shiki'
  */
 export async function getShikiHighlighter(): Promise<ShikiHighlighter> {
   return createHighlighter(
-    import('shiki-options.mjs').then((m) => m.shikiOptions),
+    import('shiki-options.mjs').then(m => m.shikiOptions),
     '_internal',
   )
 }
@@ -64,7 +64,8 @@ export async function useShikiHighlighted(
       unwatch()
       init()
     })
-  } else {
+  }
+  else {
     await init()
   }
 

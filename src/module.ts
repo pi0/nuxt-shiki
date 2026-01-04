@@ -88,8 +88,8 @@ export default defineNuxtModule<ModuleOptions>({
       new Set([...(options.bundledLangs || []), options.defaultLang]),
     ).filter(Boolean)
 
-    const highlightOptions: CodeToHastOptions =
-      !options.defaultTheme || typeof options.defaultTheme === 'string'
+    const highlightOptions: CodeToHastOptions
+      = !options.defaultTheme || typeof options.defaultTheme === 'string'
         ? {
             lang: options.defaultLang || bundledLangs[0] || 'javascript',
             theme: options.defaultTheme || bundledThemes[0] || 'min-dark',
@@ -102,10 +102,10 @@ export default defineNuxtModule<ModuleOptions>({
               light:
                 options.defaultTheme.light || bundledThemes[0] || 'min-light',
               dark:
-                options.defaultTheme.dark ||
-                bundledThemes[1] ||
-                bundledThemes[0] ||
-                'min-dark',
+                options.defaultTheme.dark
+                || bundledThemes[1]
+                || bundledThemes[0]
+                || 'min-dark',
             },
             ...options.highlightOptions,
           }
@@ -114,14 +114,14 @@ export default defineNuxtModule<ModuleOptions>({
       filename: 'shiki-options.mjs',
       getContents: () => {
         return /* js */ `
-${bundledThemes.map((theme) => /* js */ `import { default as _theme_${genSafeVariableName(theme)} } from "shiki/themes/${theme}.mjs";`).join('\n')}
-${bundledLangs.map((lang) => /* js */ `import { default as _lang_${genSafeVariableName(lang!)} } from "shiki/langs/${lang}.mjs";`).join('\n')}
+${bundledThemes.map(theme => /* js */ `import { default as _theme_${genSafeVariableName(theme)} } from "shiki/themes/${theme}.mjs";`).join('\n')}
+${bundledLangs.map(lang => /* js */ `import { default as _lang_${genSafeVariableName(lang!)} } from "shiki/langs/${lang}.mjs";`).join('\n')}
 
 export const shikiOptions = {
   highlight: ${JSON.stringify(highlightOptions, null, 2)},
   core: {
-    themes: [${bundledThemes.map((theme) => `_theme_${genSafeVariableName(theme)}`).join(', ')}],
-    langs: [${bundledLangs.map((lang) => `_lang_${genSafeVariableName(lang!)}`).join(', ')}],
+    themes: [${bundledThemes.map(theme => `_theme_${genSafeVariableName(theme)}`).join(', ')}],
+    langs: [${bundledLangs.map(lang => `_lang_${genSafeVariableName(lang!)}`).join(', ')}],
     langAlias: ${JSON.stringify(options.langAlias)},
   },
 };
