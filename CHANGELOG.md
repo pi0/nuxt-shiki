@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.3.2
+
+[compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.3.1...v0.3.2)
+
+### 🚀 Enhancements
+
+- Support dynamically loading language ([#35](https://github.com/pi0/nuxt-shiki/pull/35))
+
+### 🩹 Fixes
+
+- Missing dependencies ([b85076c](https://github.com/pi0/nuxt-shiki/commit/b85076c))
+- Remove compilerOptions in tsconfig ([4f36949](https://github.com/pi0/nuxt-shiki/commit/4f36949))
+- Shiki-options.mjs import error ([628eb57](https://github.com/pi0/nuxt-shiki/commit/628eb57))
+- Duplicate dynamic options ([dec5aaa](https://github.com/pi0/nuxt-shiki/commit/dec5aaa))
+
+### 🏡 Chore
+
+- **release:** V0.3.1 ([30f2fc7](https://github.com/pi0/nuxt-shiki/commit/30f2fc7))
+- Remove unwasm ([4979b2b](https://github.com/pi0/nuxt-shiki/commit/4979b2b))
+- Cleanup & update deps ([667efb6](https://github.com/pi0/nuxt-shiki/commit/667efb6))
+
+### ❤️ Contributors
+
+- Gxres042 ([@gxres042](https://github.com/gxres042))
+- 山吹色御守 ([@KazariEX](https://github.com/KazariEX))
+
 ## v0.3.1
 
 [compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.3.0...v0.3.1)
