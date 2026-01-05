@@ -1,9 +1,8 @@
 <script setup lang="ts">
-const code = ref<string>(/*js*/ `
+const code = ref<string>(/* js */ `
 // Try editing in the left panel!
 console.log('Hello, World!')
 `)
-
 </script>
 
 <template>
@@ -26,7 +25,6 @@ body {
 <style>
 /* https://shiki.style/guide/dual-themes#query-based-dark-mode */
 @media (prefers-color-scheme: dark) {
-
   .shiki,
   .shiki span {
     color: var(--shiki-dark) !important;

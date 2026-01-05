@@ -1,5 +1,30 @@
 # Changelog
 
+## v0.3.1
+
+[compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.3.0...v0.3.1)
+
+### 🔥 Performance
+
+- Update shiki ([40f2711](https://github.com/pi0/nuxt-shiki/commit/40f2711))
+- Use JavaScript RegExp engine ([8fe19ee](https://github.com/pi0/nuxt-shiki/commit/8fe19ee))
+
+### 🩹 Fixes
+
+- Accept special language "text" as a valid prop type ([#43](https://github.com/pi0/nuxt-shiki/pull/43))
+
+### 🏡 Chore
+
+- Update deps, fix lint issue ([6956042](https://github.com/pi0/nuxt-shiki/commit/6956042))
+- Update vitest ([91bf226](https://github.com/pi0/nuxt-shiki/commit/91bf226))
+- Fix lint issue ([1649fd8](https://github.com/pi0/nuxt-shiki/commit/1649fd8))
+
+### ❤️ Contributors
+
+- Restent Ou ([@gxres042](http://github.com/gxres042))
+- Remiconnesson ([@remiconnesson](http://github.com/remiconnesson))
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v0.3.0
 
 [compare changes](https://github.com/pi0/nuxt-shiki/compare/v0.2.1...v0.3.0)
@@ -16,7 +41,7 @@
 
 ### 💅 Refactors
 
-- ⚠️  Improve api ([bfc0b61](https://github.com/pi0/nuxt-shiki/commit/bfc0b61))
+- ⚠️ Improve api ([bfc0b61](https://github.com/pi0/nuxt-shiki/commit/bfc0b61))
 
 ### 📖 Documentation
 
@@ -39,7 +64,7 @@
 
 #### ⚠️ Breaking Changes
 
-- ⚠️  Improve api ([bfc0b61](https://github.com/pi0/nuxt-shiki/commit/bfc0b61))
+- ⚠️ Improve api ([bfc0b61](https://github.com/pi0/nuxt-shiki/commit/bfc0b61))
 
 ### ❤️ Contributors
 
@@ -64,7 +89,7 @@
 
 ### 🚀 Enhancements
 
-- ⚠️  One level unwrap transform for `pre` tag ([1a93558](https://github.com/pi0/nuxt-shiki/commit/1a93558))
+- ⚠️ One level unwrap transform for `pre` tag ([1a93558](https://github.com/pi0/nuxt-shiki/commit/1a93558))
 
 ### 🔥 Performance
 
@@ -77,7 +102,7 @@
 
 ### 💅 Refactors
 
-- ⚠️  Improve options and support multi theme ([90ed1fb](https://github.com/pi0/nuxt-shiki/commit/90ed1fb))
+- ⚠️ Improve options and support multi theme ([90ed1fb](https://github.com/pi0/nuxt-shiki/commit/90ed1fb))
 
 ### 🏡 Chore
 
@@ -90,8 +115,8 @@
 
 #### ⚠️ Breaking Changes
 
-- ⚠️  One level unwrap transform for `pre` tag ([1a93558](https://github.com/pi0/nuxt-shiki/commit/1a93558))
-- ⚠️  Improve options and support multi theme ([90ed1fb](https://github.com/pi0/nuxt-shiki/commit/90ed1fb))
+- ⚠️ One level unwrap transform for `pre` tag ([1a93558](https://github.com/pi0/nuxt-shiki/commit/1a93558))
+- ⚠️ Improve options and support multi theme ([90ed1fb](https://github.com/pi0/nuxt-shiki/commit/90ed1fb))
 
 ### ❤️ Contributors
 
@@ -131,7 +156,6 @@
 - Pooya Parsa ([@pi0](http://github.com/pi0))
 
 ## v0.0.2
-
 
 ### 🚀 Enhancements
 

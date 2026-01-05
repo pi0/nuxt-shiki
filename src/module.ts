@@ -3,11 +3,9 @@ import {
   createResolver,
   addImports,
   addTemplate,
-  useNitro,
   addServerImports,
   addComponent,
 } from '@nuxt/kit'
-import type { Nuxt } from '@nuxt/schema'
 import type { BundledLanguage, BundledTheme, CodeToHastOptions } from 'shiki'
 import { name, version } from '../package.json'
 import type { HighlightOptions } from './runtime/types'
@@ -27,6 +25,9 @@ export interface ModuleOptions {
 
   /** Default language */
   defaultLang?: BundledLanguage
+
+  /** Is dynamic loading enabled */
+  dynamic?: boolean
 
   /** Additional highlight options */
   highlightOptions?: HighlightOptions
@@ -52,9 +53,6 @@ export default defineNuxtModule<ModuleOptions>({
     // @ts-ignore
     const resolver = createResolver(import.meta.url)
 
-    // (until nitro wasm support is in experimental state)
-    addUnwasmSupport(nuxt)
-
     // Add component
     addComponent({
       filePath: resolver.resolve('./runtime/component'),
@@ -79,6 +77,21 @@ export default defineNuxtModule<ModuleOptions>({
       },
     ])
 
+    if (options.dynamic) {
+      addImports([
+        {
+          name: 'loadShikiLanguages',
+          from: resolver.resolve('./runtime/utils'),
+        },
+      ])
+      addServerImports([
+        {
+          name: 'loadShikiLanguages',
+          from: resolver.resolve('./runtime/utils'),
+        },
+      ])
+    }
+
     // Shiki config
     const bundledThemes = Array.from(
       new Set([
@@ -93,8 +106,8 @@ export default defineNuxtModule<ModuleOptions>({
       new Set([...(options.bundledLangs || []), options.defaultLang]),
     ).filter(Boolean)
 
-    const highlightOptions: CodeToHastOptions =
-      !options.defaultTheme || typeof options.defaultTheme === 'string'
+    const highlightOptions: CodeToHastOptions
+      = !options.defaultTheme || typeof options.defaultTheme === 'string'
         ? {
             lang: options.defaultLang || bundledLangs[0] || 'javascript',
             theme: options.defaultTheme || bundledThemes[0] || 'min-dark',
@@ -107,10 +120,10 @@ export default defineNuxtModule<ModuleOptions>({
               light:
                 options.defaultTheme.light || bundledThemes[0] || 'min-light',
               dark:
-                options.defaultTheme.dark ||
-                bundledThemes[1] ||
-                bundledThemes[0] ||
-                'min-dark',
+                options.defaultTheme.dark
+                || bundledThemes[1]
+                || bundledThemes[0]
+                || 'min-dark',
             },
             ...options.highlightOptions,
           }
@@ -119,14 +132,14 @@ export default defineNuxtModule<ModuleOptions>({
       filename: 'shiki-options.mjs',
       getContents: () => {
         return /* js */ `
-${bundledThemes.map((theme) => /* js */ `import { default as _theme_${genSafeVariableName(theme)} } from "shiki/themes/${theme}.mjs";`).join('\n')}
-${bundledLangs.map((lang) => /* js */ `import { default as _lang_${genSafeVariableName(lang!)} } from "shiki/langs/${lang}.mjs";`).join('\n')}
+${bundledThemes.map(theme => /* js */ `import { default as _theme_${genSafeVariableName(theme)} } from "shiki/themes/${theme}.mjs";`).join('\n')}
+${bundledLangs.map(lang => /* js */ `import { default as _lang_${genSafeVariableName(lang!)} } from "shiki/langs/${lang}.mjs";`).join('\n')}
 
 export const shikiOptions = {
   highlight: ${JSON.stringify(highlightOptions, null, 2)},
   core: {
-    themes: [${bundledThemes.map((theme) => `_theme_${genSafeVariableName(theme)}`).join(', ')}],
-    langs: [${bundledLangs.map((lang) => `_lang_${genSafeVariableName(lang!)}`).join(', ')}],
+    themes: [${bundledThemes.map(theme => `_theme_${genSafeVariableName(theme)}`).join(', ')}],
+    langs: [${bundledLangs.map(lang => `_lang_${genSafeVariableName(lang!)}`).join(', ')}],
     langAlias: ${JSON.stringify(options.langAlias)},
   },
 };
@@ -135,36 +148,10 @@ export const shikiOptions = {
     })
 
     nuxt.options.nitro.virtual = nuxt.options.nitro.virtual || {}
+    // register both plain and explicit-mjs keys to be resilient across TS/nuxt mappings
+    nuxt.options.nitro.virtual['shiki-options'] = template.getContents
     nuxt.options.nitro.virtual['shiki-options.mjs'] = template.getContents
+    nuxt.options.alias['shiki-options'] = template.dst
     nuxt.options.alias['shiki-options.mjs'] = template.dst
   },
 })
-
-function addUnwasmSupport(nuxt: Nuxt) {
-  nuxt.hook('ready', () => {
-    const nitro = useNitro()
-    const addWasmSupport = (_nitro: typeof nitro) => {
-      if (nitro.options.experimental?.wasm) {
-        return
-      }
-      _nitro.options.externals = _nitro.options.externals || {}
-      _nitro.options.externals.inline = _nitro.options.externals.inline || []
-      _nitro.options.externals.inline.push((id) => id.endsWith('.wasm'))
-      _nitro.options.exportConditions!.push('unwasm')
-      _nitro.options.externals.traceInclude!.push('shiki/dist/core.mjs')
-      _nitro.hooks.hook('rollup:before', async (_, rollupConfig) => {
-        const { rollup: unwasm } = await import('unwasm/plugin')
-        rollupConfig.plugins = rollupConfig.plugins || []
-        ;(rollupConfig.plugins as any[]).push(
-          unwasm({
-            ...(_nitro.options.wasm as any),
-          }),
-        )
-      })
-    }
-    addWasmSupport(nitro)
-    nitro.hooks.hook('prerender:init', (prerenderer) => {
-      addWasmSupport(prerenderer)
-    })
-  })
-}

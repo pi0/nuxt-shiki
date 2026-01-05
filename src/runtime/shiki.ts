@@ -1,20 +1,19 @@
 import type { HighlightOptions, ShikiHighlighter, ShikiOptions } from './types'
 import { unwrapTransformer } from './transforms'
+import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 
 const _importShikiCore = cached(() => import('shiki/core'))
-const _importWasm = cached(() => import('shiki/wasm'))
 
 export const createHighlighter = cached<ShikiHighlighter>(
   async (_shikiOptions: MaybePromise<ShikiOptions>) => {
-    const [{ getHighlighterCore }, wasm, shikiOptions] = await Promise.all([
+    const [{ createHighlighterCore }, shikiOptions] = await Promise.all([
       _importShikiCore(),
-      _importWasm(),
       _shikiOptions,
     ])
 
-    const highlighter = (await getHighlighterCore({
+    const highlighter = (await createHighlighterCore({
       ...shikiOptions.core,
-      loadWasm: wasm,
+      engine: createJavaScriptRegexEngine(),
     })) as ShikiHighlighter
 
     highlighter.highlight = (
