@@ -1,3 +1,4 @@
+import type { BundledLanguage } from 'shiki'
 import { ref, watchEffect, watch, toRef, type Ref } from 'vue'
 import type { HighlightOptions, ShikiHighlighter } from './types'
 import { createHighlighter } from './shiki'
@@ -26,8 +27,8 @@ import { createHighlighter } from './shiki'
  */
 export async function getShikiHighlighter(): Promise<ShikiHighlighter> {
   return createHighlighter(
-    // @ts-expect-error - nuxt will automatically generaete shiki-options.mjs
-    import('./shiki-options.mjs').then(m => m.shikiOptions),
+    // @ts-expect-error - import the virtual module by bare specifier so bundlers treat it as external/aliased
+    import('shiki-options.mjs').then(m => (m.shikiOptions ?? (m as any).default?.shikiOptions ?? m)),
     '_internal',
   )
 }
@@ -79,4 +80,35 @@ export async function useShikiHighlighted(
   }
 
   return highlighted
+}
+
+/**
+ * Dynamically loading languages when options.dynamic is true.
+ *
+ * @example
+ * ```vue
+ * <script setup>
+ * const highlighter = await getShikiHighlighter()
+ * await loadShikiLanguages(highlighter, "tsx", "vue");
+ * </script>
+ * ```
+ */
+export async function loadShikiLanguages(
+  highlighter: ShikiHighlighter,
+  ...langs: string[]
+) {
+  const { bundledLanguages } = await import('shiki/langs')
+  const loadedLanguages = highlighter.getLoadedLanguages()
+  await Promise.all(
+    langs
+      .filter(lang => !loadedLanguages.includes(lang))
+      .map(lang => bundledLanguages[lang as BundledLanguage])
+      .filter(Boolean)
+      .map(dynamicLang => new Promise<void>((resolve) => {
+        dynamicLang().then((loadedLang) => {
+          highlighter.loadLanguage(loadedLang).then(() => resolve())
+        })
+      }),
+      ),
+  )
 }

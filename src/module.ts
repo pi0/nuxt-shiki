@@ -18,6 +18,9 @@ export interface ModuleOptions {
   /** Languages */
   bundledLangs?: BundledLanguage[]
 
+  /** Is dynamic loading enabled */
+  dynamic?: boolean
+
   /** Default theme */
   defaultTheme?:
     | BundledTheme
@@ -73,6 +76,21 @@ export default defineNuxtModule<ModuleOptions>({
         from: resolver.resolve('./runtime/utils'),
       },
     ])
+
+    if (options.dynamic) {
+      addImports([
+        {
+          name: 'loadShikiLanguages',
+          from: resolver.resolve('./runtime/utils'),
+        },
+      ])
+      addServerImports([
+        {
+          name: 'loadShikiLanguages',
+          from: resolver.resolve('./runtime/utils'),
+        },
+      ])
+    }
 
     // Shiki config
     const bundledThemes = Array.from(
@@ -130,7 +148,10 @@ export const shikiOptions = {
     })
 
     nuxt.options.nitro.virtual = nuxt.options.nitro.virtual || {}
+    // register both plain and explicit-mjs keys to be resilient across TS/nuxt mappings
+    nuxt.options.nitro.virtual['shiki-options'] = template.getContents
     nuxt.options.nitro.virtual['shiki-options.mjs'] = template.getContents
+    nuxt.options.alias['shiki-options'] = template.dst
     nuxt.options.alias['shiki-options.mjs'] = template.dst
   },
 })
