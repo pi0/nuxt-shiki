@@ -4,14 +4,5 @@
     "dist",
     "node_modules",
     "playground",
-  ],
-  "compilerOptions": {
-    "baseUrl": "./",
-    "resolveJsonModule": true,
-    "paths": {
-      "shiki-options.mjs": [
-        "./src/runtime/shiki-options.d.ts"
-      ]
-    }
-  }
+  ]
 }

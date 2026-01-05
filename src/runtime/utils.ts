@@ -26,7 +26,8 @@ import { createHighlighter } from './shiki'
  */
 export async function getShikiHighlighter(): Promise<ShikiHighlighter> {
   return createHighlighter(
-    import('shiki-options.mjs').then(m => m.shikiOptions),
+    // @ts-expect-error - nuxt will automatically generaete shiki-options.mjs
+    import('./shiki-options.mjs').then(m => m.shikiOptions),
     '_internal',
   )
 }

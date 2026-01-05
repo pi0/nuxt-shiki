@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const code = ref<string>(/*js*/ `
+const code = ref<string>(/* js */ `
 // Try editing in the left panel!
 console.log('Hello, World!')
 `)
