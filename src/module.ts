@@ -18,9 +18,6 @@ export interface ModuleOptions {
   /** Languages */
   bundledLangs?: BundledLanguage[]
 
-  /** Is dynamic loading enabled */
-  dynamic?: boolean
-
   /** Default theme */
   defaultTheme?:
     | BundledTheme
