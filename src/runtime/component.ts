@@ -7,7 +7,7 @@ import type { HighlightOptions } from './types'
 export default defineComponent({
   props: {
     code: String,
-    lang: String as PropType<BundledLanguage>,
+    lang: String as PropType<BundledLanguage | 'text' | 'txt' | 'plain'>,
     highlightOptions: Object as PropType<HighlightOptions>,
     as: { type: String, default: 'pre' },
     unwrap: { type: Boolean, default: undefined },
@@ -15,7 +15,7 @@ export default defineComponent({
   async setup(props) {
     const el = ref() as Ref<HTMLElement>
 
-    const hydratedCode = process.client
+    const hydratedCode = import.meta.client
       ? getCurrentInstance()?.vnode?.el?.innerHTML
       : undefined
 

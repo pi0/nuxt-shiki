@@ -27,7 +27,8 @@ import { createHighlighter } from './shiki'
  */
 export async function getShikiHighlighter(): Promise<ShikiHighlighter> {
   return createHighlighter(
-    import('shiki-options.mjs').then((m) => m.shikiOptions),
+    // @ts-expect-error - import the virtual module by bare specifier so bundlers treat it as external/aliased
+    import('shiki-options.mjs').then(m => (m.shikiOptions ?? (m as any).default?.shikiOptions ?? m)),
     '_internal',
   )
 }
@@ -65,7 +66,8 @@ export async function useShikiHighlighted(
       unwatch()
       init()
     })
-  } else {
+  }
+  else {
     await init()
   }
 
@@ -95,18 +97,18 @@ export async function loadShikiLanguages(
   highlighter: ShikiHighlighter,
   ...langs: string[]
 ) {
-  const { bundledLanguages } = await import("shiki/langs");
-  const loadedLanguages = highlighter.getLoadedLanguages();
+  const { bundledLanguages } = await import('shiki/langs')
+  const loadedLanguages = highlighter.getLoadedLanguages()
   await Promise.all(
     langs
-      .filter((lang) => !loadedLanguages.includes(lang))
-      .map((lang) => bundledLanguages[lang as BundledLanguage])
+      .filter(lang => !loadedLanguages.includes(lang))
+      .map(lang => bundledLanguages[lang as BundledLanguage])
       .filter(Boolean)
-      .map((dynamicLang) => new Promise<void>((resolve) => {
+      .map(dynamicLang => new Promise<void>((resolve) => {
         dynamicLang().then((loadedLang) => {
           highlighter.loadLanguage(loadedLang).then(() => resolve())
         })
-      })
-    )
+      }),
+      ),
   )
 }
