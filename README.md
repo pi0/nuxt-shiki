@@ -102,6 +102,19 @@ export default defineEventHandler(async (event) => {
 })
 ```
 
+### `loadShikiLanguages(highlighter)`
+
+Dynamically loading languages when options.dynamic is true.
+
+**Example:**
+
+```vue
+<script setup>
+const highlighter = await getShikiHighlighter()
+await loadShikiLanguages(highlighter, "tsx", "vue");
+</script>
+```
+
 ### `useShikiHighlighted(code, options)`
 
 Return a lazy highlighted code ref (only usable in Vue)

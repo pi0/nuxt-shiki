@@ -29,6 +29,9 @@ export interface ModuleOptions {
   /** Default language */
   defaultLang?: BundledLanguage
 
+  /** Is dynamic loading enabled */
+  dynamic?: boolean
+
   /** Additional highlight options */
   highlightOptions?: HighlightOptions
 
