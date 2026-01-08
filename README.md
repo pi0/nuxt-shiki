@@ -43,11 +43,35 @@ export default defineNuxtConfig({
 
 Available options:
 
-- `bundledThemes` and `bundledLangs` can be configured to set bundled themes and languages.
-- `defaultTheme` and `defaultLang` can be configured to set default theme and language.
-- `dynamic` can be configured to set whether languages are dynamically loaded. (in this way, all languages will be bundled)
-- `langAlias` can be configured to set language aliases.
-- `highlightOptions` can be configured to set highlight defaults.
+| Property | Type | Description |
+|:--|:--|:--|
+| `bundledLangs` | `BundledLanguage[]` | Refer to the Shiki docs for a [list of supported languages](https://shiki.style/languages). |
+| `bundledThemes` | `BundledTheme[]` | List of themes to bundle, e.g. `['min-light', 'min-dark']` |
+| `defaultLang` | `BundledLanguage` | Sets the default language. |
+| `defaultTheme` | <code>BundledTheme \| Record&lt;'dark' \| 'light' \| (string &amp; {}), BundledTheme&gt;</code> | Configure a single default theme, e.g. `github-light` or different themes for light and dark modes. See example below. |
+|`dynamic` | Boolean | Set to `true` to dynamically load Languages, which bundles all languages. Refer to Shiki docs on [Bundles](https://shiki.style/guide/bundles) to understand how lazy dynamic imports work.|
+| `langAlias` | `Record<string, string>` | Set language aliases, e.g. `{ 'my-lang': 'javascript' }` |
+| `highlightOptions` | `HighlightOptions` | Set highlight defaults. |
+
+### Custom Themes for light and dark mode
+
+By [default](./src/module.ts) nuxt-shiki comes bundled with the `min-light` and `min-dark` [themes](https://shiki.style/themes). To use different themes, update the `bundledThemes` and `defaultTheme` properties, for example:
+
+```js
+export default defineNuxtConfig({
+  modules: ['nuxt-shiki'],
+  shiki: {    
+    bundledThemes: ['github-light', 'material-theme-palenight'], 
+    defaultTheme: {
+      light: 'github-light',
+      dark: 'material-theme-palenight'
+    }
+  }
+})
+```
+
+> [!NOTE]
+> Themes can only be configured via the `defaultTheme` option. It is not possible to override themes in the `<Shiki>` component. 
 
 ## `<Shiki>` component
 
