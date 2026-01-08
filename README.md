@@ -45,13 +45,13 @@ Available options:
 
 | Property | Type | Description |
 |:--|:--|:--|
-| `bundledLangs` | Array | Refer to the Shiki docs for a [list of supported languages](https://shiki.style/languages). |
-| `bundledThemes` | Array | List of themes to bundle, e.g. `['min-light', 'min-dark']` |
-| `defaultLang` | String | Sets the default language. |
-| `defaultTheme` | String or Object | Configure a single default theme, e.g. `github-light` or different themes for light and dark modes. See example below. |
+| `bundledLangs` | `BundledLanguage[]` | Refer to the Shiki docs for a [list of supported languages](https://shiki.style/languages). |
+| `bundledThemes` | `BundledTheme[]` | List of themes to bundle, e.g. `['min-light', 'min-dark']` |
+| `defaultLang` | `BundledLanguage` | Sets the default language. |
+| `defaultTheme` | <code>BundledTheme \| Record&lt;'dark' \| 'light' \| (string &amp; {}), BundledTheme&gt;</code> | Configure a single default theme, e.g. `github-light` or different themes for light and dark modes. See example below. |
 |`dynamic` | Boolean | Set to `true` to dynamically load Languages, which bundles all languages. Refer to Shiki docs on [Bundles](https://shiki.style/guide/bundles) to understand how lazy dynamic imports work.|
-| `langAlias` | Object | Set language aliases, e.g. `{ 'my-lang': 'javascript' }` |
-| `highlightOptions` | ? | Set highlight defaults. |
+| `langAlias` | `Record<string, string>` | Set language aliases, e.g. `{ 'my-lang': 'javascript' }` |
+| `highlightOptions` | `HighlightOptions` | Set highlight defaults. |
 
 ### Custom Themes for light and dark mode
 
