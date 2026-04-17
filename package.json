@@ -48,7 +48,7 @@
     "@types/node": "latest",
     "automd": "^0.4.2",
     "changelogen": "^0.6.2",
-    "eslint": "^9.39.2",
+    "eslint": "^10.2.1",
     "nuxt": "^4.2.2",
     "typescript": "~5.9.3",
     "vitest": "^4.0.16",
